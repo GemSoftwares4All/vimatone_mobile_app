@@ -41,9 +41,11 @@ class Extras {
   static final Color background = Color.fromRGBO(247, 247, 247, 1);
   static final Color secondary = Color.fromRGBO(252, 185, 0, 1);
   static final Color tetiary = Color.fromRGBO(22, 28, 48, 1);
+  static final Color notification = Color.fromRGBO(31, 41, 72, 1);
   static final Color text = Color.fromRGBO(80, 80, 80, 1);
   static final Color gray = Color.fromRGBO(172, 172, 172, 1);
   static final Color error = Color.fromRGBO(255, 87, 87, 1);
+  static final Color transparent = Colors.transparent;
 
   // --bg: rgb(247, 247, 247);
   // --tetiary: rgb(22, 28, 48);
