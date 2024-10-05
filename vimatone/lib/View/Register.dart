@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vimatone/Core/Extras.dart';
-import 'package:vimatone/View/Base.dart';
+import 'package:vimatone/View/BasePage.dart';
 import 'package:vimatone/View/Login.dart';
 import 'package:vimatone/widgets/CustomButton.dart';
 import 'package:vimatone/widgets/CustomInput.dart';
@@ -123,7 +123,7 @@ class Register extends StatelessWidget {
                       color: Extras.primary,
                     ),
                     onPress: () {
-                      Extras.routeTo(context, Index());
+                      Extras.routeTo(context, BasePage());
                     },
                   ),
                   SizedBox(

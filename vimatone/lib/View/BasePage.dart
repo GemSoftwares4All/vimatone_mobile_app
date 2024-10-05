@@ -5,14 +5,14 @@ import 'package:vimatone/View/Pages/Orders.dart';
 import 'package:vimatone/View/Pages/Products.dart';
 import 'package:vimatone/View/Pages/Profile.dart';
 
-class Index extends StatefulWidget {
-  const Index({super.key});
+class BasePage extends StatefulWidget {
+  const BasePage({super.key});
 
   @override
-  State<Index> createState() => _IndexState();
+  State<BasePage> createState() => _BasePageState();
 }
 
-class _IndexState extends State<Index> {
+class _BasePageState extends State<BasePage> {
   // bottom nav tap
   int _selectedIndex = 0;
   void _onItemTap(int index) {

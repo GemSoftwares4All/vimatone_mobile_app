@@ -17,7 +17,7 @@ class Vimatone extends StatelessWidget {
       title: 'Vimatone',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light_theme,
-      home: Index(),
+      home: BasePage(),
     );
   }
 }
