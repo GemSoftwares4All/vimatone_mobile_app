@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vimatone/Core/Extras.dart';
+import 'package:vimatone/widgets/BannerCarousel.dart';
 import 'package:vimatone/widgets/CategoryCard.dart';
+import 'package:vimatone/widgets/CustomAppBar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,26 +12,38 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final List<String> _ImagesFromDB = [
+    "assets/images/default.jpg",
+    "assets/images/default.jpg",
+    "assets/images/default.jpg",
+    "assets/images/default.jpg",
+    "assets/images/default.jpg",
+    "assets/images/default.jpg",
+    "assets/images/default.jpg",
+    "assets/images/default.jpg",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Home"),
+        appBar: CustomAppBar(
+          title: "Home",
+          showCartIcon: true,
+          cartLength: 20,
+          showSearchIcon: true,
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Bannercarousel(
+              images: _ImagesFromDB,
+              onTap: (index) {
+                print(index);
+              },
+            ),
             SizedBox(
               height: Extras.padding_md,
-            ),
-            Padding(
-              padding: EdgeInsets.all(Extras.padding_md),
-              child: Text(
-                "Category",
-                style:
-                    TextStyle(color: Extras.gray, fontSize: Extras.fontBody_md),
-              ),
             ),
             Container(
               color: Extras.primary,

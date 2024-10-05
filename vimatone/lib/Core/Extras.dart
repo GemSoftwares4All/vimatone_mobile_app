@@ -7,6 +7,7 @@ class Extras {
   static final padding_lg = 25.0;
 
   // margin
+  static final margin_xsm = 5.0;
   static final margin_sm = 10.0;
   static final margin_md = 15.0;
   static final margin_lg = 25.0;
@@ -27,6 +28,7 @@ class Extras {
   static final fontTitle_lg = 35.0;
 
   // font body
+  static final fontBody_xsm = 12.0;
   static final fontBody_sm = 15.0;
   static final fontBody_md = 20.0;
   static final fontBody_lg = 25.0;

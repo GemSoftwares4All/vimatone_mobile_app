@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vimatone/Core/Extras.dart';
-import 'package:vimatone/View/Pages/Cart.dart';
 import 'package:vimatone/View/Pages/Home.dart';
 import 'package:vimatone/View/Pages/Orders.dart';
 import 'package:vimatone/View/Pages/Products.dart';
@@ -30,7 +29,6 @@ class _IndexState extends State<Index> {
         children: [
           HomePage(),
           ProductsPage(),
-          CartPage(),
           OrdersPage(),
           ProfilePage(),
         ],

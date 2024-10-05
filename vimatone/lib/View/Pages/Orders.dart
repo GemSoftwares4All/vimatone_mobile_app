@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vimatone/widgets/CustomAppBar.dart';
 
 class OrdersPage extends StatefulWidget {
   const OrdersPage({super.key});
@@ -11,8 +12,15 @@ class _OrdersPageState extends State<OrdersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("OrdersPage Appbar"),
+      appBar: CustomAppBar(
+        title: "Orders",
+        showCartIcon: true,
+        cartLength: 20,
+        // showSearchIcon: true,
+        items: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.help_outline_rounded),
+        ),
       ),
       body: Center(
         child: Text("OrdersPage"),

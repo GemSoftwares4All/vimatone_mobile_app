@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vimatone/Core/Extras.dart';
-import 'package:vimatone/View/Index.dart';
+import 'package:vimatone/View/Base.dart';
 import 'package:vimatone/View/Register.dart';
 import 'package:vimatone/widgets/CustomButton.dart';
 import 'package:vimatone/widgets/CustomInput.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vimatone/Core/AppTheme.dart';
-import 'package:vimatone/View/Index.dart';
+import 'package:vimatone/View/Base.dart';
 // import 'package:vimatone/View/Login.dart';
 
 void main() {
