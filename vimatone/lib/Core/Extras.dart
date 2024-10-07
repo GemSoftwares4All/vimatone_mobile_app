@@ -49,10 +49,8 @@ class Extras {
   static final Color error = Color.fromRGBO(255, 87, 87, 1);
   static final Color transparent = Colors.transparent;
 
-  // --bg: rgb(247, 247, 247);
-  // --tetiary: rgb(22, 28, 48);
-  // --accent: rgb(252, 185, 0);
-  // --logo: rgb(255, 105, 0);
+  // constants
+  static final String currency = "GH\$";
 
   static void routeTo(BuildContext context, Widget destination,
       {bool FullScreenDialog = false}) {

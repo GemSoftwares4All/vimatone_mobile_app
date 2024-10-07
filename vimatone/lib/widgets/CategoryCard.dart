@@ -14,29 +14,37 @@ class Categorycard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: Extras.margin_sm),
-        padding: EdgeInsets.all(Extras.padding_sm),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Extras.radius_md),
-          color: Extras.background,
-        ),
-        child: Column(
-          children: [
-            Image.asset(
-              image,
-              width: 80,
-              height: 80,
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: Extras.margin_sm),
+      child: Material(
+        borderRadius: BorderRadius.circular(Extras.radius_md),
+        color: Extras.background,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: EdgeInsets.all(Extras.padding_sm),
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(Extras.radius_md),
+                  child: Image.asset(
+                    image,
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                  ),
+                ),
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Extras.tetiary,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              title,
-              style: TextStyle(
-                color: Extras.tetiary,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

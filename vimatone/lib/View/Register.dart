@@ -30,9 +30,6 @@ class Register extends StatelessWidget {
               padding: EdgeInsets.all(Extras.padding_md),
               child: Column(
                 children: [
-                  // SizedBox(
-                  //   height: _NavHeight.toDouble(),
-                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -59,30 +56,6 @@ class Register extends StatelessWidget {
                       color: Extras.gray,
                       fontSize: Extras.fontBody_sm,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.check_circle,
-                        color: Extras.secondary,
-                      ),
-                      Container(
-                        width: 50,
-                        height: 8,
-                        color: Extras.secondary,
-                      ),
-                      Icon(Icons.check_circle_outline_outlined),
-                      Container(
-                        width: 50,
-                        height: 8,
-                        color: Extras.gray,
-                      ),
-                      Icon(Icons.check_circle_outline_outlined),
-                    ],
                   ),
                   SizedBox(
                     height: 20,

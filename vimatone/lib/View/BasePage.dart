@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vimatone/Core/Extras.dart';
+import 'package:vimatone/View/Pages/Category.dart';
 import 'package:vimatone/View/Pages/Home.dart';
 import 'package:vimatone/View/Pages/Orders.dart';
-import 'package:vimatone/View/Pages/Products.dart';
 import 'package:vimatone/View/Pages/Profile.dart';
 
 class BasePage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _BasePageState extends State<BasePage> {
         index: _selectedIndex,
         children: [
           HomePage(),
-          ProductsPage(),
+          CategoryPage(),
           OrdersPage(),
           ProfilePage(),
         ],
@@ -53,15 +53,10 @@ class _BasePageState extends State<BasePage> {
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_basket_outlined),
-              activeIcon: Icon(Icons.shopping_basket),
-              label: "Products",
+              icon: Icon(Icons.dashboard_customize_outlined),
+              activeIcon: Icon(Icons.dashboard_customize),
+              label: "Category",
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.add_shopping_cart_rounded),
-            //   activeIcon: Icon(Icons.shopping_cart),
-            //   label: "Cart",
-            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.local_shipping_outlined),
               activeIcon: Icon(Icons.local_shipping),

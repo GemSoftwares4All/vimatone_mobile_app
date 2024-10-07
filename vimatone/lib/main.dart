@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vimatone/Core/AppTheme.dart';
-import 'package:vimatone/View/Base.dart';
-// import 'package:vimatone/View/Login.dart';
+// import 'package:vimatone/View/BasePage.dart';
+import 'package:vimatone/View/Login.dart';
 
 void main() {
   runApp(const Vimatone());
@@ -17,7 +17,7 @@ class Vimatone extends StatelessWidget {
       title: 'Vimatone',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light_theme,
-      home: BasePage(),
+      home: Login(),
     );
   }
 }

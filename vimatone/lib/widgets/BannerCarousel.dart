@@ -37,12 +37,15 @@ class _BannercarouselState extends State<Bannercarousel> {
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  child: Image.asset(
-                    widget.images[index],
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(Extras.radius_md),
+                    child: Image.asset(
+                      widget.images[index],
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                    ),
                   ),
                 ),
               );
