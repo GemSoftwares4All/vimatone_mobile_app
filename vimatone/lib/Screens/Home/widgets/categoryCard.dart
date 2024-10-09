@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vimatone/Core/Extras.dart';
+import 'package:vimatone/Config/Extras.dart';
 
 class Categorycard extends StatelessWidget {
   final String image;
@@ -15,19 +15,19 @@ class Categorycard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: Extras.margin_sm),
+      margin: EdgeInsets.symmetric(horizontal: padding_sm),
       child: Material(
-        borderRadius: BorderRadius.circular(Extras.radius_md),
-        color: Extras.background,
+        borderRadius: BorderRadius.circular(radius_md),
+        color: color_background,
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onTap,
           child: Padding(
-            padding: EdgeInsets.all(Extras.padding_sm),
+            padding: EdgeInsets.all(padding_sm),
             child: Column(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(Extras.radius_md),
+                  borderRadius: BorderRadius.circular(radius_md),
                   child: Image.asset(
                     image,
                     width: 80,
@@ -39,7 +39,7 @@ class Categorycard extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    color: Extras.tetiary,
+                    color: color_tetiary,
                   ),
                 ),
               ],
