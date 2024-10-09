@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:vimatone/Core/AppTheme.dart';
-import 'package:vimatone/View/Index.dart';
-// import 'package:vimatone/View/Login.dart';
+import 'package:provider/provider.dart';
+import 'package:vimatone/Components/BottomAppBar.dart';
+import 'package:vimatone/Config/AppTheme.dart';
+import 'package:vimatone/Providers/CartProvider.dart';
+import 'package:vimatone/Providers/ProductProvider.dart';
+import 'package:vimatone/Screens/Home/homeScreen.dart';
 
 void main() {
-  runApp(const Vimatone());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
+      child: const Vimatone(),
+    ),
+  );
 }
 
 class Vimatone extends StatelessWidget {
@@ -17,7 +28,12 @@ class Vimatone extends StatelessWidget {
       title: 'Vimatone',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light_theme,
-      home: Index(),
+      home: Bottomappbar(
+        pages: [
+          // pages that should have bottom appbar
+          HomeScreen()
+        ],
+      ),
     );
   }
 }
