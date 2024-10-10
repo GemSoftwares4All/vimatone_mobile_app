@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vimatone/Models/ProductsModel.dart';
 
 class CartProvider extends ChangeNotifier {
-  List<ProductsModel> _cart = [];
+  final List<ProductsModel> _cart = [];
 
   // getter for cart
   List<ProductsModel> get cart => _cart;
@@ -17,7 +17,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   double sumTotal() {
-    if (_cart.length > 0) {
+    if (_cart.isNotEmpty) {
       double total = 0;
       for (var product in _cart) {
         total += product.quantity * product.sale_price!;

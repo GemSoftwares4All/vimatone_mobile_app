@@ -30,11 +30,11 @@ class _ImagesliderState extends State<Imageslider> {
 
   @override
   Widget build(BuildContext context) {
-    int _imagesLength = widget.images.length;
+    int imagesLength = widget.images.length;
     return Stack(
       children: [
         CarouselSlider.builder(
-          itemCount: _imagesLength,
+          itemCount: imagesLength,
           itemBuilder: (context, int index, int realIndex) {
             return GestureDetector(
               onTap: () {
@@ -80,9 +80,9 @@ class _ImagesliderState extends State<Imageslider> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: List.generate(_imagesLength, (idx) {
+              children: List.generate(imagesLength, (idx) {
                 return AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   width: _currentIndex == idx ? 16 : 8,
                   height: 8,
                   margin: EdgeInsets.only(right: padding_sm),

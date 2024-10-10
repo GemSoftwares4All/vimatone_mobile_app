@@ -17,7 +17,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
-      appBar: Topappbar(title: "Cart"),
+      appBar: const Topappbar(title: "Cart"),
       body: Column(
         children: [
           // for cart items

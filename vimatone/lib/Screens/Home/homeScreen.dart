@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               spaceHeight_md(),
-              Searchbar(),
+              const Searchbar(),
               spaceHeight_md(),
               Imageslider(
                 images: _ImagesFromDB,
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: Row(
                     children: [
                       Categorycard(
@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisSpacing: padding_md,
                         crossAxisSpacing: padding_md,
                         childAspectRatio: 1 / 1.85,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         children: List.generate(
                           productProvider.products.length,

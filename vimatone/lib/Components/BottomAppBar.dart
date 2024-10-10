@@ -42,7 +42,7 @@ class _BottomappbarState extends State<Bottomappbar> {
           onTap: _onItemTap,
           showUnselectedLabels: true,
           unselectedItemColor: color_gray,
-          items: [
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),
               activeIcon: Icon(Icons.home),

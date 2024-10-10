@@ -66,7 +66,7 @@ class Productcard extends StatelessWidget {
                     style: font_body_title.copyWith(
                         color: color_secondary, height: 1),
                   ),
-                  Spacer()
+                  const Spacer()
                 ],
               ),
               Text(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vimatone/Models/ProductsModel.dart';
 
 class ProductProvider extends ChangeNotifier {
-  List<ProductsModel> _products = ProductList;
+  final List<ProductsModel> _products = ProductList;
   // List<ProductsModel> _products = [];
 
   // getter for products

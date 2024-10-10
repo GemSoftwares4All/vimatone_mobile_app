@@ -28,7 +28,7 @@ class Vimatone extends StatelessWidget {
       title: 'Vimatone',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light_theme,
-      home: Bottomappbar(
+      home: const Bottomappbar(
         pages: [
           // pages that should have bottom appbar
           HomeScreen()

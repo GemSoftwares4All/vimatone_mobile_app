@@ -35,7 +35,7 @@ class _CartitemcardState extends State<Cartitemcard> {
               height: 100,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -102,7 +102,7 @@ class _CartitemcardState extends State<Cartitemcard> {
               )
             ],
           ),
-          Spacer(),
+          const Spacer(),
           GestureDetector(
             onTap: () {
               cartProvider.removeFromCart(widget.index);

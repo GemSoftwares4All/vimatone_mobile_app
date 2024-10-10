@@ -17,17 +17,17 @@ class Topappbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _items = [];
+    List<Widget> items = [];
 
     if (showCartIcon) {
-      _items.add(
+      items.add(
         Row(
           children: [
             GestureDetector(
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (content) => CartScreen(),
+                    builder: (content) => const CartScreen(),
                   ),
                 );
               },
@@ -35,7 +35,7 @@ class Topappbar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.all(padding_md),
-                    child: Icon(Icons.shopping_cart_outlined),
+                    child: const Icon(Icons.shopping_cart_outlined),
                   ),
                   Positioned(
                     right: 4,
@@ -64,7 +64,7 @@ class Topappbar extends StatelessWidget implements PreferredSizeWidget {
       );
     }
 
-    _items.add(
+    items.add(
       Builder(
         builder: (context) {
           return Container(
@@ -77,7 +77,7 @@ class Topappbar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       title: Text(title),
-      actions: _items,
+      actions: items,
       centerTitle: true,
       scrolledUnderElevation: 0,
     );
