@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vimatone/Config/Extras.dart';
-import 'package:vimatone/Screens/Cart/cartScreen.dart';
 
 class Topappbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -25,37 +24,35 @@ class Topappbar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (content) => CartScreen(),
-                  ),
-                );
+                Navigator.of(context).pushNamed("/cart");
               },
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(padding_md),
-                    child: Icon(Icons.shopping_cart_outlined),
-                  ),
-                  Positioned(
-                    right: 4,
-                    top: 4,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: color_secondary,
-                        shape: BoxShape.circle,
-                      ),
-                      width: 20,
-                      height: 20,
-                      child: Center(
-                        child: Text(
-                          "$cartLength",
-                          style: font_tiny.copyWith(color: color_primary),
+              child: Container(
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(padding_md),
+                      child: Icon(Icons.shopping_cart_outlined),
+                    ),
+                    Positioned(
+                      right: 4,
+                      top: 4,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: color_secondary,
+                          shape: BoxShape.circle,
+                        ),
+                        width: 20,
+                        height: 20,
+                        child: Center(
+                          child: Text(
+                            "$cartLength",
+                            style: font_tiny.copyWith(color: color_primary),
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
             spaceWidth_sm()

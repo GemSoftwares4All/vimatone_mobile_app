@@ -4,7 +4,11 @@ import 'package:vimatone/Components/BottomAppBar.dart';
 import 'package:vimatone/Config/AppTheme.dart';
 import 'package:vimatone/Providers/CartProvider.dart';
 import 'package:vimatone/Providers/ProductProvider.dart';
+import 'package:vimatone/Screens/Cart/cartScreen.dart';
 import 'package:vimatone/Screens/Home/homeScreen.dart';
+import 'package:vimatone/Screens/Search/searchScreen.dart';
+import 'package:vimatone/Screens/Shop/shopScreen.dart';
+import 'package:vimatone/Screens/ViewProduct/viewProduct.dart';
 
 void main() {
   runApp(
@@ -28,12 +32,28 @@ class Vimatone extends StatelessWidget {
       title: 'Vimatone',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light_theme,
-      home: Bottomappbar(
-        pages: [
-          // pages that should have bottom appbar
-          HomeScreen()
-        ],
-      ),
+      initialRoute: "/",
+      routes: {
+        "/": (context) => Bottomappbar(
+              pages: [HomeScreen(), ShopScreen(product_filter: {})],
+            ),
+        "/cart": (context) => CartScreen(),
+        "/search": (context) => SearchScreen(),
+        "/shop": (context) {
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>;
+          return ShopScreen(
+            product_filter: args,
+          );
+        },
+        "/view_product": (context) {
+          final args =
+              ModalRoute.of(context)!.settings.arguments as Map<String, int>;
+          return Viewproduct(
+            product_index: args["index"]!,
+          );
+        }
+      },
     );
   }
 }

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:vimatone/Components/AppButton.dart';
 import 'package:vimatone/Config/Extras.dart';
 
 class Productcard extends StatelessWidget {
   final String image;
   final String price;
   final String title;
+  final Color? backgroundColor;
   final String? priceStroke;
-  final bool isSaved;
   final VoidCallback onCardTap;
   final VoidCallback onAddTap;
   const Productcard({
@@ -14,17 +15,17 @@ class Productcard extends StatelessWidget {
     required this.image,
     required this.price,
     this.priceStroke,
-    this.isSaved = false,
     required this.title,
     required this.onCardTap,
     required this.onAddTap,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
       borderRadius: BorderRadius.circular(radius_md),
-      color: color_background,
+      color: backgroundColor == null ? color_primary : backgroundColor,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onCardTap,
@@ -75,28 +76,19 @@ class Productcard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              TextButton(
-                onPressed: onAddTap,
-                style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(color_secondary),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(radius_md),
-                      ),
-                    )),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
+              AppButton(
+                  onTap: () async {
+                    await Future.sync(onAddTap);
+                  },
+                  items: [
                     Text("Add to Cart",
                         style: font_body.copyWith(color: color_primary)),
                     Icon(
                       Icons.add_shopping_cart_rounded,
                       color: color_primary,
                       size: size_md,
-                    ),
-                  ],
-                ),
-              )
+                    )
+                  ])
             ],
           ),
         ),

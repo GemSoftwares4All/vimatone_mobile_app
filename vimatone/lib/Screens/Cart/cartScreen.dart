@@ -24,8 +24,7 @@ class _CartScreenState extends State<CartScreen> {
           Flexible(
             flex: 5,
             child: Container(
-              // height: MediaQuery.of(context).size.height - 200,
-              padding: EdgeInsets.only(left: padding_md, right: padding_md),
+              height: double.infinity,
               child: SingleChildScrollView(
                 child: Column(
                   children: List.generate(
@@ -38,56 +37,50 @@ class _CartScreenState extends State<CartScreen> {
           ),
 
           // for cart details
-          Center(
-            child: Flexible(
-              flex: 1,
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(padding_md),
-                color: color_primary,
-                child: Column(
-                  children: [
-                    Text(
-                      "Total:",
-                      style: font_body,
-                    ),
-                    Text(
-                      "$currency ${cartProvider.sumTotal().toStringAsFixed(2)}",
-                      style: font_subtitle.copyWith(
-                        color: color_secondary,
-                      ),
-                    ),
-                    spaceHeight_md(),
-                    TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                          padding: WidgetStatePropertyAll(
-                              EdgeInsets.all(padding_md)),
-                          backgroundColor:
-                              WidgetStatePropertyAll(color_secondary),
-                          shape: WidgetStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(radius_md),
-                            ),
-                          )),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "Checkout",
-                            style: font_subtitle.copyWith(color: color_primary),
-                          ),
-                          Icon(
-                            Icons.local_shipping_outlined,
-                            color: color_primary,
-                            size: size_lg,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(padding_md),
+            color: color_primary,
+            child: Column(
+              children: [
+                Text(
+                  "Total:",
+                  style: font_body,
                 ),
-              ),
+                Text(
+                  "$currency ${cartProvider.sumTotal().toStringAsFixed(2)}",
+                  style: font_subtitle.copyWith(
+                    color: color_secondary,
+                  ),
+                ),
+                spaceHeight_md(),
+                TextButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                      padding:
+                          WidgetStatePropertyAll(EdgeInsets.all(padding_md)),
+                      backgroundColor: WidgetStatePropertyAll(color_secondary),
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(radius_md),
+                        ),
+                      )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Checkout",
+                        style: font_subtitle.copyWith(color: color_primary),
+                      ),
+                      Icon(
+                        Icons.local_shipping_outlined,
+                        color: color_primary,
+                        size: size_lg,
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         ],
