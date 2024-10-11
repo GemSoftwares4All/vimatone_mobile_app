@@ -8,7 +8,6 @@ import 'package:vimatone/Providers/ProductProvider.dart';
 import 'package:vimatone/Screens/Home/widgets/categoryCard.dart';
 import 'package:vimatone/Components/imageSlider.dart';
 import 'package:vimatone/Components/productCard.dart';
-import 'package:vimatone/Screens/Home/widgets/searchBar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,6 +24,11 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
@@ -32,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: Topappbar(
         title: "Home",
-        showCartIcon: true,
         cartLength: cartProvider.cart.length,
       ),
       body: SingleChildScrollView(
@@ -40,8 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            spaceHeight_md(),
-            Searchbar(),
             spaceHeight_md(),
             Imageslider(
               images: _ImagesFromDB,
@@ -95,7 +96,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // goto products page
+                          Navigator.of(context).pushNamed(
+                            "/shop",
+                            arguments: <String, dynamic>{},
+                          );
                         },
                         child: Text(
                           "More ...",

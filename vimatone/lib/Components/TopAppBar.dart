@@ -5,11 +5,13 @@ class Topappbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showCartIcon;
   final int cartLength;
+  final bool showSearch;
   final Widget? items;
   const Topappbar({
     super.key,
     required this.title,
-    this.showCartIcon = false,
+    this.showCartIcon = true,
+    this.showSearch = true,
     this.cartLength = 0,
     this.items,
   });
@@ -22,44 +24,49 @@ class Topappbar extends StatelessWidget implements PreferredSizeWidget {
       _items.add(
         Row(
           children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed("/cart");
-              },
-              child: Container(
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(padding_md),
-                      child: Icon(Icons.shopping_cart_outlined),
-                    ),
-                    Positioned(
-                      right: 4,
-                      top: 4,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: color_secondary,
-                          shape: BoxShape.circle,
-                        ),
-                        width: 20,
-                        height: 20,
-                        child: Center(
-                          child: Text(
-                            "$cartLength",
-                            style: font_tiny.copyWith(color: color_primary),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+            Stack(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed("/cart");
+                  },
+                  icon: Icon(Icons.shopping_cart_outlined),
                 ),
-              ),
+                Positioned(
+                  right: 4,
+                  top: 4,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: color_secondary,
+                      shape: BoxShape.circle,
+                    ),
+                    width: 20,
+                    height: 20,
+                    child: Center(
+                      child: Text(
+                        "$cartLength",
+                        style: font_tiny.copyWith(color: color_primary),
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
             spaceWidth_sm()
           ],
         ),
       );
     }
+
+    if (showSearch)
+      _items.add(
+        IconButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed("/search");
+          },
+          icon: Icon(Icons.search),
+        ),
+      );
 
     _items.add(
       Builder(

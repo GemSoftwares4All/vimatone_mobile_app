@@ -27,7 +27,17 @@ class _ShopScreenState extends State<ShopScreen> {
   @override
   void initState() {
     super.initState();
-    sortedProductList = ProductList;
+    if (widget.product_filter.containsKey("category")) {
+      sortedProductList = ProductList.where(
+        (product) {
+          return product.category
+              .toLowerCase()
+              .contains(widget.product_filter["category"].toLowerCase());
+        },
+      ).toList();
+      menucontroller.text = widget.product_filter["category"];
+    } else
+      sortedProductList = ProductList;
   }
 
   @override
@@ -36,21 +46,14 @@ class _ShopScreenState extends State<ShopScreen> {
     return Scaffold(
       appBar: Topappbar(
         title: "Shop",
-        showCartIcon: true,
         cartLength: cartProvider.cart.length,
-        items: IconButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed("/search");
-          },
-          icon: Icon(Icons.search),
-        ),
       ),
-      body: Padding(
-        padding: EdgeInsets.only(
-            top: padding_sm, left: padding_md, right: padding_md),
-        child: Column(
-          children: [
-            Row(
+      body: Column(
+        children: [
+          Container(
+            color: color_primary,
+            padding: EdgeInsets.all(padding_sm),
+            child: Row(
               children: [
                 DropdownMenu(
                   controller: menucontroller,
@@ -65,7 +68,6 @@ class _ShopScreenState extends State<ShopScreen> {
                         },
                       ).toList();
                     });
-                    print(category);
                   },
                   label: Text("Category"),
                   dropdownMenuEntries: List.generate(
@@ -86,7 +88,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     },
                     items: [
                       Padding(
-                        padding: EdgeInsets.all(padding_sm),
+                        padding: EdgeInsets.symmetric(vertical: 6),
                         child: Icon(
                           Icons.cancel_outlined,
                           color: color_primary,
@@ -95,9 +97,13 @@ class _ShopScreenState extends State<ShopScreen> {
                     ])
               ],
             ),
-            spaceHeight_sm(),
-            Flexible(
-              flex: 4,
+          ),
+          spaceHeight_sm(),
+          Flexible(
+            flex: 4,
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: padding_sm, left: padding_md, right: padding_md),
               child: GridView.count(
                 crossAxisCount: 2,
                 mainAxisSpacing: padding_md,
@@ -136,8 +142,8 @@ class _ShopScreenState extends State<ShopScreen> {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

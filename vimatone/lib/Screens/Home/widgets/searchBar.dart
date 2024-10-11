@@ -17,11 +17,7 @@ class Searchbar extends StatelessWidget {
             Icons.search,
             color: color_gray,
           ),
-          label: Text(
-            "Search",
-            style: font_body_title.copyWith(color: color_gray),
-          ),
-          hintText: "Search",
+          hintText: "Search product ...",
         ),
       ),
     );
