@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:vimatone/Components/AppNetworkImage.dart';
 import 'package:vimatone/Config/Extras.dart';
 
 class Imageslider extends StatefulWidget {
@@ -8,6 +9,7 @@ class Imageslider extends StatefulWidget {
   final EdgeInsets? padding;
   final double? borderRadius;
   final double? height;
+  final bool? network;
   final bool expandCenter;
   final Function(int) onTap;
   const Imageslider({
@@ -15,6 +17,7 @@ class Imageslider extends StatefulWidget {
     required this.images,
     required this.onTap,
     this.viewPortFraction = 1.0,
+    this.network = false,
     this.height,
     this.padding,
     this.borderRadius,
@@ -44,16 +47,19 @@ class _ImagesliderState extends State<Imageslider> {
                 borderRadius: widget.borderRadius == null
                     ? BorderRadius.zero
                     : BorderRadius.circular(widget.borderRadius!),
-                child: Hero(
-                  tag: widget.images[index],
-                  child: Image.asset(
-                    widget.images[index],
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                  ),
-                ),
+                child: widget.network == true
+                    ? AppNetworkImage(
+                        image: (baseUrl + widget.images[index]),
+                        width: double.infinity,
+                        height: double.infinity,
+                      )
+                    : Image.asset(
+                        widget.images[index],
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                      ),
               ),
             );
           },

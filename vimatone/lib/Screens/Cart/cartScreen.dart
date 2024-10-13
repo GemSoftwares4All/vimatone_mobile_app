@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vimatone/Components/AppButton.dart';
 import 'package:vimatone/Components/TopAppBar.dart';
 import 'package:vimatone/Config/Extras.dart';
+import 'package:vimatone/Providers/AuthProvider.dart';
 import 'package:vimatone/Providers/CartProvider.dart';
 import 'package:vimatone/Screens/Cart/widgets/cartItemCard.dart';
 
@@ -16,8 +18,13 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
-      appBar: Topappbar(title: "Cart"),
+      appBar: Topappbar(
+        title: "Cart",
+        showCartIcon: false,
+        showSearch: false,
+      ),
       body: Column(
         children: [
           // for cart items
@@ -54,31 +61,29 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
                 spaceHeight_md(),
-                TextButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                      padding:
-                          WidgetStatePropertyAll(EdgeInsets.all(padding_md)),
-                      backgroundColor: WidgetStatePropertyAll(color_secondary),
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(radius_md),
-                        ),
-                      )),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        "Checkout",
-                        style: font_subtitle.copyWith(color: color_primary),
-                      ),
-                      Icon(
-                        Icons.local_shipping_outlined,
-                        color: color_primary,
-                        size: size_lg,
-                      ),
-                    ],
-                  ),
+                AppButton(
+                  onTap: () async {
+                    await Future.delayed(Duration(seconds: 2), () {
+                      if (authProvider.isAuthorized) {
+                        setState(() {
+                          cartProvider.clearCart();
+                        });
+                      } else {
+                        Navigator.of(context).pushNamed("/login");
+                      }
+                    });
+                  },
+                  items: [
+                    Text(
+                      "Checkout",
+                      style: font_subtitle.copyWith(color: color_primary),
+                    ),
+                    Icon(
+                      Icons.local_shipping_outlined,
+                      color: color_primary,
+                      size: size_lg,
+                    ),
+                  ],
                 )
               ],
             ),

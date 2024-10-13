@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vimatone/Components/AppButton.dart';
+import 'package:vimatone/Components/AppNetworkImage.dart';
 import 'package:vimatone/Config/Extras.dart';
 
 class Productcard extends StatelessWidget {
@@ -28,6 +29,7 @@ class Productcard extends StatelessWidget {
       color: backgroundColor == null ? color_primary : backgroundColor,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
+        overlayColor: WidgetStatePropertyAll(color_background),
         onTap: onCardTap,
         child: Container(
           width: double.infinity,
@@ -38,16 +40,18 @@ class Productcard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(radius_md),
-                child: Hero(
-                  tag: image,
-                  child: Image.asset(
-                    image,
-                    width: double.infinity,
-                    height: 150,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                  ),
+                child: AppNetworkImage(
+                  image: image,
+                  width: double.infinity,
+                  height: 150,
                 ),
+                // Image.asset(
+                //   image,
+                //   width: double.infinity,
+                //   height: 150,
+                //   fit: BoxFit.cover,
+                //   alignment: Alignment.center,
+                // ),
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,6 +79,7 @@ class Productcard extends StatelessWidget {
                 style: font_body.copyWith(
                   overflow: TextOverflow.ellipsis,
                 ),
+                maxLines: 2,
               ),
               AppButton(
                   onTap: () async {

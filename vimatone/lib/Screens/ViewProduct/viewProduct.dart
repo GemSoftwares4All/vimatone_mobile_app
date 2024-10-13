@@ -35,10 +35,11 @@ class _ViewproductState extends State<Viewproduct> {
         child: Column(
           children: [
             Imageslider(
-              images: [productToView.thumbnail_id!],
+              images: explodeImages(productToView.thumbnail_id!),
               onTap: (index) {},
               height: 300,
               expandCenter: false,
+              network: true,
             ),
             spaceHeight_md(),
             Container(
@@ -112,8 +113,15 @@ class _ViewproductState extends State<Viewproduct> {
                             onPressed: () {
                               setState(() {
                                 cartProvider.addToCart(productToView);
-                                // cartProvider.clearCart();
                               });
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                backgroundColor: color_success,
+                                content: Text(
+                                  "Added successfully!",
+                                  style: font_body.copyWith(color: color_dark),
+                                ),
+                              ));
                             },
                             style: ButtonStyle(
                                 padding: WidgetStatePropertyAll(

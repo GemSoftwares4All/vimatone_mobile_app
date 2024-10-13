@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:vimatone/Components/AppButton.dart';
 import 'package:vimatone/Components/TopAppBar.dart';
 import 'package:vimatone/Components/productCard.dart';
 import 'package:vimatone/Config/Extras.dart';
-import 'package:vimatone/Models/CategoryModel.dart';
 import 'package:vimatone/Models/ProductsModel.dart';
 import 'package:vimatone/Providers/CartProvider.dart';
+import 'package:vimatone/Providers/CategoryProvider.dart';
+import 'package:vimatone/Providers/ProductProvider.dart';
+import 'package:vimatone/Services/ProductService.dart';
 
 class ShopScreen extends StatefulWidget {
-  final Map<String, dynamic> product_filter;
+  final String? category;
   const ShopScreen({
     super.key,
-    required this.product_filter,
+    this.category = "",
   });
 
   @override
@@ -20,61 +23,75 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
-  List<ProductsModel> sortedProductList = [];
   TextEditingController menucontroller = TextEditingController();
   ScrollController shop_scroll_controller = ScrollController();
+  var _getProducts = ProductService().getProducts();
 
   @override
   void initState() {
     super.initState();
-    if (widget.product_filter.containsKey("category")) {
-      sortedProductList = ProductList.where(
-        (product) {
-          return product.category
-              .toLowerCase()
-              .contains(widget.product_filter["category"].toLowerCase());
-        },
-      ).toList();
-      menucontroller.text = widget.product_filter["category"];
-    } else
-      sortedProductList = ProductList;
+    if (widget.category != "") {
+      menucontroller.text = widget.category != "" ? widget.category! : "";
+      _getProducts = ProductService().getByCategory(widget.category!);
+    }
+    // check is categoryProvider is empty then fill it
+
+    // was having some error, is not that important as
+    // the user will goto home first and categories
+    // will be loaded from there first
+
+    // final _categoryProvider = Provider.of<CategoryProvider>(context);
+    // final _categoryService = CategoryService();
+    // if (_categoryProvider.category.length == 0) {
+    //   _categoryService.getCategory().then(
+    //     (_data) {
+    //       var _catdata = _data["data"];
+    //       for (var _cat in _catdata) {
+    //         _categoryProvider.addCategory(CategoryModel.fromJson(_cat));
+    //       }
+    //     },
+    //   );
+    // }
   }
+
+  // ? ProductService().getByCategory(widget.product_filter["category"])
+  // : ProductService().getProducts();
 
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
+    final categoryProvider = Provider.of<CategoryProvider>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
+
     return Scaffold(
       appBar: Topappbar(
         title: "Shop",
         cartLength: cartProvider.cart.length,
       ),
-      body: Column(
-        children: [
-          Container(
-            color: color_primary,
-            padding: EdgeInsets.all(padding_sm),
-            child: Row(
+      body: Container(
+        padding: EdgeInsets.all(padding_md),
+        color: color_primary,
+        margin: EdgeInsets.only(top: padding_sm),
+        child: Column(
+          children: [
+            Row(
               children: [
                 DropdownMenu(
+                  width: MediaQuery.sizeOf(context).width / 1.7,
                   controller: menucontroller,
+                  menuHeight: MediaQuery.sizeOf(context).width,
                   onSelected: (category) {
                     setState(() {
                       menucontroller.text = category!;
-                      sortedProductList = ProductList.where(
-                        (product) {
-                          return product.category
-                              .toLowerCase()
-                              .contains(category.toLowerCase());
-                        },
-                      ).toList();
+                      _getProducts = ProductService().getByCategory(category);
                     });
                   },
                   label: Text("Category"),
                   dropdownMenuEntries: List.generate(
-                    categoryList.length,
+                    categoryProvider.category.length,
                     (index) => DropdownMenuEntry(
-                      value: categoryList[index].name,
-                      label: categoryList[index].name,
+                      value: categoryProvider.category[index].name,
+                      label: categoryProvider.category[index].name,
                     ),
                   ),
                 ),
@@ -82,8 +99,8 @@ class _ShopScreenState extends State<ShopScreen> {
                 AppButton(
                     onTap: () async {
                       setState(() {
-                        sortedProductList = ProductList;
                         menucontroller.value = TextEditingValue.empty;
+                        _getProducts = ProductService().getProducts();
                       });
                     },
                     items: [
@@ -97,53 +114,159 @@ class _ShopScreenState extends State<ShopScreen> {
                     ])
               ],
             ),
-          ),
-          spaceHeight_sm(),
-          Flexible(
-            flex: 4,
-            child: Padding(
-              padding: EdgeInsets.only(
-                  top: padding_sm, left: padding_md, right: padding_md),
-              child: GridView.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: padding_md,
-                crossAxisSpacing: padding_md,
-                childAspectRatio: 1 / 1.7,
-                physics: AlwaysScrollableScrollPhysics(),
-                controller: shop_scroll_controller,
-                shrinkWrap: true,
-                children: List.generate(
-                  sortedProductList.length,
-                  (index) {
-                    return Productcard(
-                      image: sortedProductList[index].thumbnail_id!,
-                      title: sortedProductList[index].title,
-                      price: "${sortedProductList[index].sale_price}",
-                      priceStroke: sortedProductList[index].sale_price != 0
-                          ? "${sortedProductList[index].regular_price}"
-                          : null,
-                      onCardTap: () {
-                        Navigator.of(context).pushNamed(
-                          "/view_product",
-                          arguments: {
-                            "index": index,
-                          },
-                        );
-                      },
-                      onAddTap: () {
-                        setState(() {
-                          cartProvider.addToCart(
-                            sortedProductList[index],
-                          );
-                        });
-                      },
-                    );
+            spaceHeight_sm(),
+            Flexible(
+              flex: 4,
+              child: SingleChildScrollView(
+                child: FutureBuilder(
+                  future: _getProducts,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container(
+                        child: GridView.count(
+                          primary: false,
+                          crossAxisCount: 2,
+                          mainAxisSpacing: padding_md,
+                          crossAxisSpacing: padding_md,
+                          childAspectRatio: 1 / 1.8,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          children: List.generate(
+                            4,
+                            (index) => Shimmer.fromColors(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    height: 150,
+                                    decoration: BoxDecoration(
+                                      color: color_background,
+                                      borderRadius:
+                                          BorderRadius.circular(radius_md),
+                                    ),
+                                  ),
+                                  spaceHeight_sm(),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 15,
+                                    decoration: BoxDecoration(
+                                      color: color_background,
+                                      borderRadius: BorderRadius.circular(
+                                        radius_md,
+                                      ),
+                                    ),
+                                  ),
+                                  spaceHeight_sm(),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      color: color_background,
+                                      borderRadius: BorderRadius.circular(
+                                        radius_md,
+                                      ),
+                                    ),
+                                  ),
+                                  spaceHeight_sm(),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: color_background,
+                                      borderRadius: BorderRadius.circular(
+                                        radius_md,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              baseColor: color_background,
+                              highlightColor: color_primary,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (snapshot.hasData) {
+                      var _data = snapshot.data;
+                      print(_data);
+                      var _patdata = _data["data"];
+                      return Container(
+                        // height: ,
+                        child: GridView.count(
+                          primary: false,
+                          crossAxisCount: 2,
+                          mainAxisSpacing: padding_md,
+                          crossAxisSpacing: padding_md,
+                          childAspectRatio: 1 / 1.8,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          children: List.generate(
+                            _patdata.length,
+                            (index) {
+                              var _product =
+                                  ProductsModel.fromJson(_patdata[index]);
+                              productProvider.addProducts(_product);
+                              return Productcard(
+                                image: (baseUrl +
+                                    explodeImages(_product.thumbnail_id!)[0]),
+                                title: _product.title,
+                                price: "${_product.sale_price}",
+                                priceStroke: _product.sale_price != null
+                                    ? "${_product.regular_price}"
+                                    : null,
+                                onCardTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    "/view_product",
+                                    arguments: index,
+                                  );
+                                },
+                                onAddTap: () {
+                                  setState(() {
+                                    cartProvider.addToCart(
+                                      productProvider.products[index],
+                                    );
+                                  });
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    backgroundColor: color_success,
+                                    content: Text(
+                                      "Added successfully!",
+                                      style:
+                                          font_body.copyWith(color: color_dark),
+                                    ),
+                                  ));
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (snapshot.hasError) {
+                      return Container(
+                        height: 200,
+                        padding: EdgeInsets.all(padding_md),
+                        color: color_background,
+                        width: MediaQuery.sizeOf(context).width,
+                        child: Center(
+                          child: Text(
+                            "Error!",
+                            style: font_title.copyWith(color: color_gray),
+                          ),
+                        ),
+                      );
+                    }
+
+                    throw Exception();
                   },
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

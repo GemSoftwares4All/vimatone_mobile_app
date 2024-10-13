@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vimatone/Components/BottomAppBar.dart';
 import 'package:vimatone/Config/AppTheme.dart';
+import 'package:vimatone/Providers/AuthProvider.dart';
 import 'package:vimatone/Providers/CartProvider.dart';
+import 'package:vimatone/Providers/CategoryProvider.dart';
 import 'package:vimatone/Providers/ProductProvider.dart';
+import 'package:vimatone/Screens/Account/Login/loginScreen.dart';
+import 'package:vimatone/Screens/Account/accountBase.dart';
 import 'package:vimatone/Screens/Cart/cartScreen.dart';
 import 'package:vimatone/Screens/Home/homeScreen.dart';
 import 'package:vimatone/Screens/Search/searchScreen.dart';
@@ -14,8 +18,10 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
       ],
       child: const Vimatone(),
     ),
@@ -35,23 +41,22 @@ class Vimatone extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => Bottomappbar(
-              pages: [HomeScreen(), ShopScreen(product_filter: {})],
+              pages: [
+                HomeScreen(),
+                ShopScreen(),
+                Accountbase(),
+              ],
             ),
         "/cart": (context) => CartScreen(),
         "/search": (context) => SearchScreen(),
+        "/login": (context) => LoginScreen(),
         "/shop": (context) {
-          final args = ModalRoute.of(context)!.settings.arguments
-              as Map<String, dynamic>;
-          return ShopScreen(
-            product_filter: args,
-          );
+          final args = ModalRoute.of(context)!.settings.arguments as String;
+          return ShopScreen(category: args);
         },
         "/view_product": (context) {
-          final args =
-              ModalRoute.of(context)!.settings.arguments as Map<String, int>;
-          return Viewproduct(
-            product_index: args["index"]!,
-          );
+          final args = ModalRoute.of(context)!.settings.arguments as int;
+          return Viewproduct(product_index: args);
         }
       },
     );

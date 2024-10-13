@@ -8,11 +8,10 @@ class CategoryModel {
     this.name,
     this.image,
   );
-}
 
-List<CategoryModel> categoryList = [
-  CategoryModel(1, "Pet", "assets/images/cat1.jpg"),
-  CategoryModel(2, "Tools", "assets/images/cat2.jpg"),
-  CategoryModel(3, "Groceries", "assets/images/cat3.jpg"),
-  CategoryModel(4, "Computers", "assets/images/cat4.jpg"),
-];
+  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
+        int.parse(json["category_id"]),
+        json["name"],
+        json["image"],
+      );
+}

@@ -66,18 +66,42 @@ final TextStyle font_subtitle =
     TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal);
 final TextStyle font_title =
     TextStyle(fontSize: 25.0, fontWeight: FontWeight.normal);
+final TextStyle font_Logo1 =
+    TextStyle(fontSize: 40.0, fontWeight: FontWeight.normal);
+final TextStyle font_Logo2 =
+    TextStyle(fontSize: 35.0, fontWeight: FontWeight.normal);
 
 // colors
 final Color color_primary = Color.fromRGBO(255, 255, 255, 1);
 final Color color_background = Color.fromRGBO(247, 247, 247, 1);
 final Color color_secondary = Color.fromRGBO(252, 185, 0, 1);
 final Color color_tetiary = Color.fromRGBO(22, 28, 48, 1);
+final Color color_dark = Color.fromRGBO(71, 71, 71, 1);
 final Color color_gray = Color.fromRGBO(172, 172, 172, 1);
 final Color color_error = Color.fromRGBO(255, 87, 87, 1);
+final Color color_success = Color.fromRGBO(195, 255, 135, 1);
 final Color color_transparent = Colors.transparent;
 
 // constants
 final String currency = "GH\$";
+final String baseUrl = "https://vimatone.com/";
+final String baseApiUrl = "https://vimatone.com/m_api";
+final String API_KEY =
+    "c4316f07b6c87e4aa6bfe8ee7adada86e364fe23d7a9cf8171b9bf8461c2ba85";
+Map<String, dynamic> apiBody = {
+  "m_name": "hacker",
+  "m_id": "ua98hack21",
+};
+Map<String, String> apiHeaders = {
+  "x-api-key":
+      "c4316f07b6c87e4aa6bfe8ee7adada86e364fe23d7a9cf8171b9bf8461c2ba85",
+  "Content-Type": "application/json",
+  "Accept": "application/json"
+};
+
+List<String> explodeImages(String imgString) {
+  return imgString.split("|");
+}
 
   // void routeTo(BuildContext context, Widget destination,
   //     {bool FullScreenDialog = false}) {

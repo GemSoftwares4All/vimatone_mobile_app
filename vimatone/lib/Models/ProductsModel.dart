@@ -16,7 +16,7 @@ class ProductsModel {
   final String ad_status;
   final String post_date;
   final String? expiry_date;
-  final bool is_approved;
+  final String is_approved;
   final String is_trending;
   int quantity = 1;
 
@@ -43,17 +43,17 @@ class ProductsModel {
   );
 
   factory ProductsModel.fromJson(Map<String, dynamic> json) => ProductsModel(
-        json["ad_id"],
-        json["vendor_id"],
+        int.parse(json["ad_id"]),
+        int.parse(json["vendor_id"]),
         json["title"],
         json["tags"],
-        json["stock"],
+        int.parse(json["stock"]),
         json["post_author"],
         json["description"],
         json["purchase_note"],
         json["category"],
-        json["sale_price"],
-        json["regular_price"],
+        double.parse(json["sale_price"]),
+        double.parse(json["regular_price"]),
         json["thumbnail_id"],
         json["payment_ref"],
         json["ad_type"],
@@ -84,7 +84,7 @@ List<ProductsModel> ProductList = [
     "ad_status",
     "post_date",
     "expiry_date",
-    true,
+    "no",
     "is_trending",
   ),
   ProductsModel(
@@ -105,7 +105,7 @@ List<ProductsModel> ProductList = [
     "ad_status",
     "post_date",
     "expiry_date",
-    true,
+    "no",
     "is_trending",
   ),
   ProductsModel(
@@ -126,7 +126,7 @@ List<ProductsModel> ProductList = [
     "ad_status",
     "post_date",
     "expiry_date",
-    true,
+    "no",
     "is_trending",
   ),
   ProductsModel(
@@ -147,7 +147,7 @@ List<ProductsModel> ProductList = [
     "ad_status",
     "post_date",
     "expiry_date",
-    true,
+    "no",
     "is_trending",
   ),
   ProductsModel(
@@ -168,7 +168,7 @@ List<ProductsModel> ProductList = [
     "ad_status",
     "post_date",
     "expiry_date",
-    true,
+    "no",
     "is_trending",
   ),
 ];
