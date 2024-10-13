@@ -43,7 +43,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   void increaseQty(int index) {
-    if (_cart[index].quantity <= _cart[index].stock) _cart[index].quantity += 1;
+    if (_cart[index].quantity < _cart[index].stock) _cart[index].quantity += 1;
     notifyListeners();
   }
 }

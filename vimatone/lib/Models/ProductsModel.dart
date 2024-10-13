@@ -16,7 +16,7 @@ class ProductsModel {
   final String ad_status;
   final String post_date;
   final String? expiry_date;
-  final bool is_approved;
+  final String is_approved;
   final String is_trending;
   int quantity = 1;
 
@@ -43,17 +43,17 @@ class ProductsModel {
   );
 
   factory ProductsModel.fromJson(Map<String, dynamic> json) => ProductsModel(
-        json["ad_id"],
-        json["vendor_id"],
+        int.parse(json["ad_id"]),
+        int.parse(json["vendor_id"]),
         json["title"],
         json["tags"],
-        json["stock"],
+        int.parse(json["stock"]),
         json["post_author"],
         json["description"],
         json["purchase_note"],
         json["category"],
-        json["sale_price"],
-        json["regular_price"],
+        double.parse(json["sale_price"]),
+        double.parse(json["regular_price"]),
         json["thumbnail_id"],
         json["payment_ref"],
         json["ad_type"],
@@ -75,7 +75,7 @@ List<ProductsModel> ProductList = [
     "post_author",
     "Dell Inspiron Gen-11 i5 with 64gb ram and 5tb ssd. keyboard lights, softkeyboard, strong battery. Good camera with usbC port. ",
     "purchase_note",
-    "category",
+    "Computers",
     1829.99,
     2005.85,
     "assets/images/lap1.jpg",
@@ -84,7 +84,7 @@ List<ProductsModel> ProductList = [
     "ad_status",
     "post_date",
     "expiry_date",
-    true,
+    "no",
     "is_trending",
   ),
   ProductsModel(
@@ -96,7 +96,7 @@ List<ProductsModel> ProductList = [
     "post_author",
     "Alienware i9 laptop 32 core, 128 gb ram, 8tb ssd, keyboard lights, camera, strong battery rgb colors. usitable for gaming, editing, etc...",
     "purchase_note",
-    "category",
+    "Computers",
     2500.10,
     3054.85,
     "assets/images/lap2.jpg",
@@ -105,7 +105,7 @@ List<ProductsModel> ProductList = [
     "ad_status",
     "post_date",
     "expiry_date",
-    true,
+    "no",
     "is_trending",
   ),
   ProductsModel(
@@ -117,7 +117,7 @@ List<ProductsModel> ProductList = [
     "post_author",
     "Sony T53ef rgb gaming mouse, 3 gear dpi change, backlit, very smooth",
     "purchase_note",
-    "category",
+    "Pet",
     42.99,
     65.85,
     "assets/images/mouse.jpg",
@@ -126,7 +126,7 @@ List<ProductsModel> ProductList = [
     "ad_status",
     "post_date",
     "expiry_date",
-    true,
+    "no",
     "is_trending",
   ),
   ProductsModel(
@@ -138,7 +138,7 @@ List<ProductsModel> ProductList = [
     "post_author",
     "Iphone 16 pro max ultra super, 100gb ram 2000gb rom a lot os features but paid and a lot of security blocks.",
     "purchase_note",
-    "category",
+    "Tools",
     589.99,
     700.85,
     "assets/images/iphone.jpg",
@@ -147,7 +147,7 @@ List<ProductsModel> ProductList = [
     "ad_status",
     "post_date",
     "expiry_date",
-    true,
+    "no",
     "is_trending",
   ),
   ProductsModel(
@@ -159,7 +159,7 @@ List<ProductsModel> ProductList = [
     "post_author",
     "Iphone 16 pro max ultra super, 100gb ram 2000gb rom a lot os features but paid and a lot of security blocks.",
     "purchase_note",
-    "category",
+    "Groceries",
     589.99,
     700.85,
     "assets/images/iphone.jpg",
@@ -168,7 +168,7 @@ List<ProductsModel> ProductList = [
     "ad_status",
     "post_date",
     "expiry_date",
-    true,
+    "no",
     "is_trending",
   ),
 ];

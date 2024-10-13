@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vimatone/Components/AppNetworkImage.dart';
 import 'package:vimatone/Config/Extras.dart';
 
 class Categorycard extends StatelessWidget {
@@ -23,17 +24,15 @@ class Categorycard extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Padding(
-            padding: EdgeInsets.all(padding_sm),
+            padding: EdgeInsets.all(padding_md),
             child: Column(
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(radius_md),
-                  child: Image.asset(
-                    image,
+                  child: AppNetworkImage(
+                    image: image,
                     width: 80,
                     height: 80,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
                   ),
                 ),
                 Text(

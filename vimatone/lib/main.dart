@@ -1,17 +1,29 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vimatone/Components/BottomAppBar.dart';
 import 'package:vimatone/Config/AppTheme.dart';
+import 'package:vimatone/Providers/AuthProvider.dart';
 import 'package:vimatone/Providers/CartProvider.dart';
+import 'package:vimatone/Providers/CategoryProvider.dart';
 import 'package:vimatone/Providers/ProductProvider.dart';
+import 'package:vimatone/Screens/Account/Login/loginScreen.dart';
+import 'package:vimatone/Screens/Account/accountBase.dart';
+import 'package:vimatone/Screens/Cart/cartScreen.dart';
 import 'package:vimatone/Screens/Home/homeScreen.dart';
+import 'package:vimatone/Screens/Search/searchScreen.dart';
+import 'package:vimatone/Screens/Shop/shopScreen.dart';
+import 'package:vimatone/Screens/ViewProduct/viewProduct.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
       ],
       child: const Vimatone(),
     ),
@@ -28,12 +40,28 @@ class Vimatone extends StatelessWidget {
       title: 'Vimatone',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light_theme,
-      home: const Bottomappbar(
-        pages: [
-          // pages that should have bottom appbar
-          HomeScreen()
-        ],
-      ),
+      initialRoute: "/",
+      routes: {
+        "/": (context) => Bottomappbar(
+              // ignore: prefer_const_literals_to_create_immutables
+              pages: [
+                HomeScreen(),
+                ShopScreen(),
+                Accountbase(),
+              ],
+            ),
+        "/cart": (context) => CartScreen(),
+        "/search": (context) => SearchScreen(),
+        "/login": (context) => LoginScreen(),
+        "/shop": (context) {
+          final args = ModalRoute.of(context)!.settings.arguments as String;
+          return ShopScreen(category: args);
+        },
+        "/view_product": (context) {
+          final args = ModalRoute.of(context)!.settings.arguments as int;
+          return Viewproduct(product_index: args);
+        }
+      },
     );
   }
 }

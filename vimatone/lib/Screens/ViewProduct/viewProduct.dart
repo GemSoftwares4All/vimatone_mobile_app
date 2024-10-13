@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, duplicate_ignore, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vimatone/Components/TopAppBar.dart';
@@ -34,19 +36,17 @@ class _ViewproductState extends State<Viewproduct> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Stack(
-              children: [
-                Imageslider(
-                  images: [productToView.thumbnail_id!],
-                  onTap: (index) {},
-                  height: 300,
-                  expandCenter: false,
-                ),
-              ],
+            Imageslider(
+              images: explodeImages(productToView.thumbnail_id!),
+              onTap: (index) {},
+              height: 300,
+              expandCenter: false,
+              network: true,
             ),
             spaceHeight_md(),
             Container(
               padding: EdgeInsets.all(padding_md),
+              width: double.infinity,
               color: color_primary,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,18 +65,24 @@ class _ViewproductState extends State<Viewproduct> {
                   ),
                   Row(
                     children: [
-                      Text(
-                        "$currency ${productToView.regular_price}",
-                        style: font_body.copyWith(
-                          color: color_gray,
-                          decoration: TextDecoration.lineThrough,
-                          decorationColor: color_gray,
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          "$currency ${productToView.regular_price}",
+                          style: font_body.copyWith(
+                            color: color_gray,
+                            decoration: TextDecoration.lineThrough,
+                            decorationColor: color_gray,
+                          ),
                         ),
                       ),
                       spaceWidth_lg(),
-                      Text(
-                        "$currency ${productToView.sale_price}",
-                        style: font_subtitle.copyWith(color: color_secondary),
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          "$currency ${productToView.sale_price}",
+                          style: font_subtitle.copyWith(color: color_secondary),
+                        ),
                       ),
                     ],
                   ),
@@ -96,64 +102,86 @@ class _ViewproductState extends State<Viewproduct> {
                   spaceHeight_lg(),
                   Container(
                     padding: EdgeInsets.all(padding_sm),
+                    width: double.infinity,
                     decoration: BoxDecoration(
                       color: color_background,
                       borderRadius: BorderRadius.circular(radius_md),
                     ),
                     child: Row(
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              cartProvider.addToCart(productToView);
-                              // cartProvider.clearCart();
-                            });
-                          },
-                          style: ButtonStyle(
-                              padding: WidgetStatePropertyAll(
-                                  EdgeInsets.all(padding_md)),
-                              backgroundColor:
-                                  WidgetStatePropertyAll(color_secondary),
-                              shape: WidgetStatePropertyAll(
-                                RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(radius_md),
+                        Flexible(
+                          flex: 4,
+                          child: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                cartProvider.addToCart(productToView);
+                              });
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                backgroundColor: color_success,
+                                content: Text(
+                                  "Added successfully!",
+                                  style: font_body.copyWith(color: color_dark),
                                 ),
-                              )),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                "Add to Cart",
-                                style: font_body.copyWith(color: color_primary),
-                              ),
-                              Icon(
-                                Icons.add_shopping_cart_rounded,
-                                color: color_primary,
-                                size: size_md,
-                              ),
-                            ],
+                              ));
+                            },
+                            style: ButtonStyle(
+                                padding: WidgetStatePropertyAll(
+                                    EdgeInsets.all(padding_md)),
+                                backgroundColor:
+                                    WidgetStatePropertyAll(color_secondary),
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(radius_md),
+                                  ),
+                                )),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Add to Cart",
+                                  style:
+                                      font_body.copyWith(color: color_primary),
+                                ),
+                                Spacer(),
+                                Icon(
+                                  Icons.add_shopping_cart_rounded,
+                                  color: color_primary,
+                                  size: size_md,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.facebook_rounded,
+                        Spacer(),
+                        Flexible(
+                          flex: 1,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.facebook_rounded,
+                            ),
                           ),
                         ),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.close,
+                        Flexible(
+                          flex: 1,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.close,
+                            ),
                           ),
                         ),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.link,
+                        Flexible(
+                          flex: 1,
+                          child: IconButton(
+                            onPressed: () {},
+                            // ignore: prefer_const_constructors
+                            icon: Icon(
+                              Icons.link,
+                            ),
                           ),
                         ),
                       ],

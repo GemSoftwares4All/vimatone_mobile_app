@@ -7,20 +7,17 @@ class Searchbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       color: color_primary,
       padding: EdgeInsets.all(padding_md),
-      child: TextFormField(
+      child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.search,
             color: color_gray,
           ),
-          label: Text(
-            "Search",
-            style: font_body_title.copyWith(color: color_gray),
-          ),
-          hintText: "Search...",
+          hintText: "Search product ...",
         ),
       ),
     );
