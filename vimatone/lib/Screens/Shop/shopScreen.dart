@@ -128,7 +128,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           crossAxisCount: 2,
                           mainAxisSpacing: padding_md,
                           crossAxisSpacing: padding_md,
-                          childAspectRatio: 1 / 2,
+                          childAspectRatio: 1 / 1.8,
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           children: List.generate(
