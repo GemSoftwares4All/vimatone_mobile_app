@@ -1,13 +1,20 @@
+
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:vimatone/Config/Extras.dart';
 
-class CategoryService {
-  Future getCategory() async {
+class LoginService {
+  Future sendInfo(String email, String password) async {
     var reqBody = apiBody;
     reqBody.addAll(
-      {"endpoint": "categories"},
+      {
+        "endpoint": "login_form",
+        "data": {
+          "email": email,
+          "password": password
+        }
+      },
     );
 
     final response = await http.post(

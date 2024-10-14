@@ -4,10 +4,14 @@ import 'package:vimatone/Config/Extras.dart';
 class Apptextformfield extends StatelessWidget {
   final String hintText;
   final String label;
+  final String errorText;
   final TextEditingController controller;
   final TextInputType keyboard;
   final Icon? prefixIcon;
   final bool obsecureText;
+  final bool error;
+
+  
   const Apptextformfield({
     super.key,
     required this.hintText,
@@ -15,7 +19,9 @@ class Apptextformfield extends StatelessWidget {
     required this.controller,
     required this.keyboard,
     this.prefixIcon,
-    this.obsecureText = false,
+    this.obsecureText = false, 
+    this.error = false, 
+    this.errorText = "",
   });
 
   @override
@@ -25,6 +31,7 @@ class Apptextformfield extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
+        errorText: error ? errorText : null,
         label: Text(
           label,
           style: font_body.copyWith(color: color_gray),

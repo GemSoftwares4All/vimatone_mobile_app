@@ -37,6 +37,7 @@ class _AppButtonState extends State<AppButton> {
     return TextButton(
       onPressed: _isLoading ? null : _handlePress,
       style: ButtonStyle(
+          // ignore: prefer_if_null_operators
           backgroundColor: WidgetStatePropertyAll(widget.backgroundColor == null
               ? color_secondary
               : widget.backgroundColor),

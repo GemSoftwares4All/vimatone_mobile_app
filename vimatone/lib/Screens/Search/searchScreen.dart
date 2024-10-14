@@ -19,11 +19,12 @@ class SearchScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                   ),
+                  // ignore: prefer_const_constructors
                   Flexible(
                     flex: 2,
-                    child: Searchbar(),
+                    child: const Searchbar(),
                   ),
                 ],
               ),
@@ -31,12 +32,12 @@ class SearchScreen extends StatelessWidget {
                 flex: 1,
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.all(padding_md),
+                    padding: const EdgeInsets.all(padding_md),
                     child: Column(
                       children: List.generate(
                         5,
                         (index) => Container(
-                          margin: EdgeInsets.only(bottom: padding_sm),
+                          margin: const EdgeInsets.only(bottom: padding_sm),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(radius_md),
                             child: Material(
@@ -45,7 +46,7 @@ class SearchScreen extends StatelessWidget {
                                   // do search and restore results in products model file
                                 },
                                 child: Padding(
-                                  padding: EdgeInsets.all(padding_md),
+                                  padding: const EdgeInsets.all(padding_md),
                                   child: Row(
                                     children: [
                                       Icon(

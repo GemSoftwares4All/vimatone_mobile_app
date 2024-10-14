@@ -10,7 +10,7 @@ class ProductService {
       {
         "endpoint": "fetch_ads",
         "data": {
-          "for": "trending",
+          "for": "shop_ads",
           "limit": 16,
         },
       },
@@ -34,7 +34,7 @@ class ProductService {
       {
         "endpoint": "fetch_ads",
         "data": {
-          "for": "trending",
+          "for": "shop_ads",
           "limit": 20,
           "by_category": category,
         },
@@ -59,7 +59,7 @@ class ProductService {
       {
         "endpoint": "fetch_ads",
         "data": {
-          "for": "trending",
+          "for": "shop_ads",
           "limit": 20,
         },
       },
@@ -76,4 +76,81 @@ class ProductService {
       throw Exception();
     }
   }
+
+  Future vendorProducts(String postAuthor, String email) async {
+    var reqBody = apiBody;
+    reqBody.addAll(
+      {
+        "endpoint": "vendor",
+        "data": {
+          "post_author": postAuthor,
+          "email": email,
+          "for": "products",
+        },
+      },
+    );
+
+    final response = await http.post(
+      Uri.parse(baseApiUrl),
+      headers: apiHeaders,
+      body: jsonEncode(reqBody),
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)["response"];
+    } else {
+      throw Exception();
+    }
+  }
+  
+
+  Future vendorOrders(String postAuthor, String email) async {
+    var reqBody = apiBody;
+    reqBody.addAll(
+      {
+        "endpoint": "vendor",
+        "data": {
+          "post_author": postAuthor,
+          "email": email,
+          "for": "orders",
+        },
+      },
+    );
+
+    final response = await http.post(
+      Uri.parse(baseApiUrl),
+      headers: apiHeaders,
+      body: jsonEncode(reqBody),
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)["response"];
+    } else {
+      throw Exception();
+    }
+  }
+
+  Future vendorWithdrawals(String postAuthor, String email) async {
+    var reqBody = apiBody;
+    reqBody.addAll(
+      {
+        "endpoint": "vendor",
+        "data": {
+          "post_author": postAuthor,
+          "email": email,
+          "for": "withdrawals",
+        },
+      },
+    );
+
+    final response = await http.post(
+      Uri.parse(baseApiUrl),
+      headers: apiHeaders,
+      body: jsonEncode(reqBody),
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)["response"];
+    } else {
+      throw Exception();
+    }
+  }
+
 }
