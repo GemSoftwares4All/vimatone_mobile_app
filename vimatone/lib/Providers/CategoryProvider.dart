@@ -11,6 +11,6 @@ class CategoryProvider extends ChangeNotifier {
     if (!_category.contains(category)) {
       _category.add(category);
     }
-    // notifyListeners();
+    notifyListeners();
   }
 }
