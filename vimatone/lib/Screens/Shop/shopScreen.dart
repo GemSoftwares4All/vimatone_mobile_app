@@ -190,7 +190,6 @@ class _ShopScreenState extends State<ShopScreen> {
 
                     if (snapshot.hasData) {
                       var _data = snapshot.data;
-                      print(_data);
                       var _patdata = _data["data"];
                       return Container(
                         // height: ,

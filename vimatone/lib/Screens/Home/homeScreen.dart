@@ -60,9 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 200,
               viewPortFraction: 0.8,
               borderRadius: radius_md,
-              onTap: (index) {
-                print(index);
-              },
+              onTap: (index) {},
             ),
             spaceHeight_md(),
             Container(
@@ -125,7 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 (index) {
                                   var _cat =
                                       CategoryModel.fromJson(_catdata[index]);
-                                  categoryProvider.addCategory(_cat);
                                   return Categorycard(
                                     image: (baseUrl + _cat.image),
                                     title: _cat.name,
@@ -263,7 +260,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       if (snapshot.hasData) {
                         var _data = snapshot.data;
-                        print(_data);
                         var _patdata = _data["data"];
                         return Container(
                           // height: ,

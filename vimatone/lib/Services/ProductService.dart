@@ -76,4 +76,80 @@ class ProductService {
       throw Exception();
     }
   }
+
+  // Rafik's code
+  Future vendorProducts(String postAuthor, String email) async {
+    var reqBody = apiBody;
+    reqBody.addAll(
+      {
+        "endpoint": "vendor",
+        "data": {
+          "post_author": postAuthor,
+          "email": email,
+          "for": "products",
+        },
+      },
+    );
+
+    final response = await http.post(
+      Uri.parse(baseApiUrl),
+      headers: apiHeaders,
+      body: jsonEncode(reqBody),
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)["response"];
+    } else {
+      throw Exception();
+    }
+  }
+
+  Future vendorOrders(String postAuthor, String email) async {
+    var reqBody = apiBody;
+    reqBody.addAll(
+      {
+        "endpoint": "vendor",
+        "data": {
+          "post_author": postAuthor,
+          "email": email,
+          "for": "orders",
+        },
+      },
+    );
+
+    final response = await http.post(
+      Uri.parse(baseApiUrl),
+      headers: apiHeaders,
+      body: jsonEncode(reqBody),
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)["response"];
+    } else {
+      throw Exception();
+    }
+  }
+
+  Future vendorWithdrawals(String postAuthor, String email) async {
+    var reqBody = apiBody;
+    reqBody.addAll(
+      {
+        "endpoint": "vendor",
+        "data": {
+          "post_author": postAuthor,
+          "email": email,
+          "for": "withdrawals",
+        },
+      },
+    );
+
+    final response = await http.post(
+      Uri.parse(baseApiUrl),
+      headers: apiHeaders,
+      body: jsonEncode(reqBody),
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)["response"];
+    } else {
+      throw Exception();
+    }
+  }
 }

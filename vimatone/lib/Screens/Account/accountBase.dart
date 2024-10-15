@@ -15,7 +15,6 @@ class _AccountbaseState extends State<Accountbase> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-    print(authProvider.isAuthorized);
     return authProvider.isAuthorized ? Accountscreen() : LoginScreen();
   }
 }

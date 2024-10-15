@@ -7,9 +7,9 @@ class CategoryProvider extends ChangeNotifier {
   // getter for cart
   List<CategoryModel> get category => _category;
 
-  void addCategory(CategoryModel category) {
-    if (!_category.contains(category)) {
-      _category.add(category);
+  void addCategories(List categoryList) {
+    for (var _ele in categoryList) {
+      _category.add(CategoryModel.fromJson(_ele));
     }
     notifyListeners();
   }

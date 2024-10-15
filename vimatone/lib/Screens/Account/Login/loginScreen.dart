@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:vimatone/Components/AppButton.dart';
 import 'package:vimatone/Config/Extras.dart';
 import 'package:vimatone/Providers/AuthProvider.dart';
+import 'package:vimatone/Providers/UserProvider.dart';
 import 'package:vimatone/Screens/Account/Login/widgets/appTextFormfield.dart';
+import 'package:vimatone/Services/LoginService.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,17 +15,23 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  var _passwdError = null;
+  var _emailError = null;
+  final loginService = LoginService();
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController usernameController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+
     final authProvider = Provider.of<AuthProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: color_background,
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(padding_md),
           child: Column(
@@ -52,30 +60,59 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               spaceHeight_lg(),
-              Apptextformfield(
-                hintText: "Enter username",
-                label: "Username",
-                controller: usernameController,
-                keyboard: TextInputType.text,
-              ),
-              spaceHeight_lg(),
-              Apptextformfield(
-                hintText: "Enter password",
-                label: "Password",
-                controller: passwordController,
-                obsecureText: true,
-                keyboard: TextInputType.visiblePassword,
+              Column(
+                children: [
+                  Apptextformfield(
+                    hintText: "Enter email address",
+                    label: "Email address",
+                    controller: emailController,
+                    keyboard: TextInputType.emailAddress,
+                    errorText: _emailError,
+                  ),
+                  spaceHeight_lg(),
+                  Apptextformfield(
+                    hintText: "Enter password",
+                    label: "Password",
+                    controller: passwordController,
+                    errorText: _passwdError,
+                    obsecureText: true,
+                    keyboard: TextInputType.visiblePassword,
+                  ),
+                ],
               ),
               spaceHeight_lg(),
               AppButton(
                 onTap: () async {
-                  // remove delay and do login but remember to add
-                  // await to login functionality
-                  await Future.delayed(Duration(seconds: 3), () {
-                    setState(() {
-                      authProvider.toggleAuth();
-                    });
+                  setState(() {
+                    _passwdError = null;
+                    _emailError = null;
                   });
+                  Map _response = await loginService.Login(
+                    emailController.text,
+                    passwordController.text,
+                  );
+                  if (_response["status"] != 200) {
+                    Map _data = _response["data"];
+                    if (_data.containsKey("password")) {
+                      setState(() {
+                        _passwdError = _data["password"];
+                      });
+                    }
+                    if (_data.containsKey("email")) {
+                      setState(() {
+                        _emailError = _data["email"];
+                      });
+                    }
+                  }
+                  print(_response);
+                  setState(() {
+                    authProvider.setAuth(true);
+                    userProvider.setUser(_response["data"]);
+                  });
+                  print(userProvider.CurrentUser);
+                  // showDialog(context: context, builder: (context) {
+
+                  // });
                 },
                 items: [
                   Text(
