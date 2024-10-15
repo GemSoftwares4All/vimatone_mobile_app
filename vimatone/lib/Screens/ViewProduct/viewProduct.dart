@@ -8,10 +8,10 @@ import 'package:vimatone/Providers/CartProvider.dart';
 import 'package:vimatone/Providers/ProductProvider.dart';
 
 class Viewproduct extends StatefulWidget {
-  final int product_index;
+  final ProductsModel product_model;
   const Viewproduct({
     super.key,
-    required this.product_index,
+    required this.product_model,
   });
 
   @override
@@ -21,10 +21,9 @@ class Viewproduct extends StatefulWidget {
 class _ViewproductState extends State<Viewproduct> {
   @override
   Widget build(BuildContext context) {
-    final prdProvider = Provider.of<ProductProvider>(context);
+    // final prdProvider = Provider.of<ProductProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
-    final ProductsModel productToView =
-        prdProvider.products[widget.product_index];
+    final ProductsModel productToView = widget.product_model;
     return Scaffold(
       appBar: Topappbar(
         title: "Product",

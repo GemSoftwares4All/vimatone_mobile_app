@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:vimatone/Components/TopAppBar.dart';
+import 'package:vimatone/Components/productCardShimmer.dart';
 import 'package:vimatone/Config/Extras.dart';
 import 'package:vimatone/Models/CategoryModel.dart';
 import 'package:vimatone/Models/ProductsModel.dart';
@@ -198,61 +199,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisCount: 2,
                             mainAxisSpacing: padding_md,
                             crossAxisSpacing: padding_md,
-                            childAspectRatio: 1 / 1.8,
+                            childAspectRatio: 1 / 2,
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             children: List.generate(
                               4,
-                              (index) => Shimmer.fromColors(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: color_background,
-                                        borderRadius:
-                                            BorderRadius.circular(radius_md),
-                                      ),
-                                    ),
-                                    spaceHeight_sm(),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 15,
-                                      decoration: BoxDecoration(
-                                        color: color_background,
-                                        borderRadius: BorderRadius.circular(
-                                          radius_md,
-                                        ),
-                                      ),
-                                    ),
-                                    spaceHeight_sm(),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 20,
-                                      decoration: BoxDecoration(
-                                        color: color_background,
-                                        borderRadius: BorderRadius.circular(
-                                          radius_md,
-                                        ),
-                                      ),
-                                    ),
-                                    spaceHeight_sm(),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: color_background,
-                                        borderRadius: BorderRadius.circular(
-                                          radius_md,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                baseColor: color_background,
-                                highlightColor: color_primary,
-                              ),
+                              (index) => ProductCardShimmer(),
                             ),
                           ),
                         );
@@ -266,9 +218,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: GridView.count(
                             primary: false,
                             crossAxisCount: 2,
-                            mainAxisSpacing: padding_md,
+                            // mainAxisSpacing: padding_md,
                             crossAxisSpacing: padding_md,
-                            childAspectRatio: 1 / 1.8,
+                            childAspectRatio: 1 / 2,
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             children: List.generate(
@@ -288,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onCardTap: () {
                                     Navigator.of(context).pushNamed(
                                       "/view_product",
-                                      arguments: index,
+                                      arguments: _product,
                                     );
                                   },
                                   onAddTap: () {

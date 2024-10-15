@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:vimatone/Components/TopAppBar.dart';
+import 'package:vimatone/Components/productCardShimmer.dart';
 import 'package:vimatone/Config/Extras.dart';
 import 'package:vimatone/Models/ProductsModel.dart';
 import 'package:vimatone/Providers/ProductProvider.dart';
@@ -79,484 +81,284 @@ class _AccountscreenState extends State<Accountscreen>
 
     var user = userProvider.CurrentUser;
 
-    var _getVProducts = ProductService().vendorProducts(user.fname, user.email);
-    var _getVOrders = ProductService().vendorOrders(user.fname, user.email);
+    var _getVProducts =
+        ProductService().vendorProducts(user.username, user.email);
+    var _getVOrders = ProductService().vendorOrders(user.username, user.email);
     var _getVWithdrawals =
-        ProductService().vendorWithdrawals(user.fname, user.email);
+        ProductService().vendorWithdrawals(user.username, user.email);
 
-    return Scaffold(
-      // appBar: Topappbar(
-      //   title: "Account",
-      // ),
-      body: Container(
-        color: color_primary,
-        child: loggedIn
-            ? ListView(
-                scrollDirection: Axis.vertical,
-                padding: EdgeInsets.all(15),
-                children: [
-                  Container(
-                    height: 280,
-                    child: Container(
-                      child: Column(),
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: 20,
-                  ),
-
-                  Container(
-                    height: 40,
-                    child: TabBar(
-                        controller: _tabController,
-                        labelColor: color_secondary,
-                        unselectedLabelColor: Colors.grey,
-                        indicatorColor: color_secondary,
-                        tabs: [
-                          Tab(
-                            text: "Products",
-                          ),
-                          Tab(
-                            text: "Orders",
-                          ),
-                          Tab(
-                            text: "Withdrawal",
-                          ),
-                        ]),
-                  ),
-
-                  SizedBox(
-                    height: 20,
-                  ),
-
-                  SizedBox(
-                      child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      // Content for each tab
-                      Container(
-                        child: Flexible(
-                          flex: 4,
-                          child: SingleChildScrollView(
-                            child: FutureBuilder(
-                              future: _getVProducts,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Container(
-                                    child: GridView.count(
-                                      primary: false,
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: padding_md,
-                                      crossAxisSpacing: padding_md,
-                                      childAspectRatio: 1 / 1.8,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      children: List.generate(
-                                        4,
-                                        (index) => Shimmer.fromColors(
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: double.infinity,
-                                                height: 150,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          radius_md),
-                                                ),
-                                              ),
-                                              spaceHeight_sm(),
-                                              Container(
-                                                width: double.infinity,
-                                                height: 15,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    radius_md,
-                                                  ),
-                                                ),
-                                              ),
-                                              spaceHeight_sm(),
-                                              Container(
-                                                width: double.infinity,
-                                                height: 20,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    radius_md,
-                                                  ),
-                                                ),
-                                              ),
-                                              spaceHeight_sm(),
-                                              Container(
-                                                width: double.infinity,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    radius_md,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          baseColor: color_background,
-                                          highlightColor: color_primary,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-
-                                if (snapshot.hasData) {
-                                  var _data = snapshot.data;
-                                  print(_data);
-                                  var _patdata = _data["data"];
-                                  return Container(
-                                    // height: ,
-                                    child: GridView.count(
-                                      primary: false,
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: padding_md,
-                                      crossAxisSpacing: padding_md,
-                                      childAspectRatio: 1 / 1.8,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      children: List.generate(
-                                        _patdata.length,
-                                        (index) {
-                                          var _product = ProductsModel.fromJson(
-                                              _patdata[index]);
-                                          productProvider.addProducts(_product);
-                                          return ProductTile(
-                                            image: (baseUrl +
-                                                explodeImages(
-                                                    _product.thumbnail_id!)[0]),
-                                            title: _product.title,
-                                            price: "${_product.sale_price}",
-                                            priceStroke: _product.sale_price !=
-                                                    null
-                                                ? "${_product.regular_price}"
-                                                : null,
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                }
-
-                                if (snapshot.hasError) {
-                                  return Container(
-                                    height: 200,
-                                    padding: EdgeInsets.all(padding_md),
-                                    color: color_background,
-                                    width: MediaQuery.sizeOf(context).width,
-                                    child: Center(
-                                      child: Text(
-                                        "Error!",
-                                        style: font_title.copyWith(
-                                            color: color_gray),
-                                      ),
-                                    ),
-                                  );
-                                }
-
-                                throw Exception();
-                              },
-                            ),
-                          ),
+    // for development
+    // var _getVProducts =
+    //     ProductService().vendorProducts("AA900", "adamabdulrafik1@gmail.com");
+    // var _getVOrders =
+    //     ProductService().vendorOrders("AA900", "adamabdulrafik1@gmail.com");
+    // var _getVWithdrawals = ProductService()
+    //     .vendorWithdrawals("AA900", "adamabdulrafik1@gmail.com");
+    return SafeArea(
+      child: Scaffold(
+        appBar: TabBar(
+          controller: _tabController,
+          labelColor: color_secondary,
+          unselectedLabelColor: Colors.grey,
+          indicatorColor: color_secondary,
+          tabs: [
+            Tab(
+              text: "Products",
+            ),
+            Tab(
+              text: "Orders",
+            ),
+            Tab(
+              text: "Withdrawal",
+            ),
+          ],
+        ),
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            // Content for each tab
+            SingleChildScrollView(
+              child: FutureBuilder(
+                future: _getVProducts,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      child: GridView.count(
+                        primary: false,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: padding_md,
+                        crossAxisSpacing: padding_md,
+                        childAspectRatio: 1 / 1.5,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        children: List.generate(
+                          4,
+                          (index) => ProductCardShimmer(),
                         ),
                       ),
+                    );
+                  }
 
-                      Container(
-                        child: Flexible(
-                          flex: 4,
-                          child: SingleChildScrollView(
-                            child: FutureBuilder(
-                              future: _getVOrders,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Container(
-                                    child: GridView.count(
-                                      primary: false,
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: padding_md,
-                                      crossAxisSpacing: padding_md,
-                                      childAspectRatio: 1 / 1.8,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      children: List.generate(
-                                        4,
-                                        (index) => Shimmer.fromColors(
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: double.infinity,
-                                                height: 150,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          radius_md),
-                                                ),
-                                              ),
-                                              spaceHeight_sm(),
-                                              Container(
-                                                width: double.infinity,
-                                                height: 15,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    radius_md,
-                                                  ),
-                                                ),
-                                              ),
-                                              spaceHeight_sm(),
-                                              Container(
-                                                width: double.infinity,
-                                                height: 20,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    radius_md,
-                                                  ),
-                                                ),
-                                              ),
-                                              spaceHeight_sm(),
-                                              Container(
-                                                width: double.infinity,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    radius_md,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          baseColor: color_background,
-                                          highlightColor: color_primary,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-
-                                if (snapshot.hasData) {
-                                  var _data = snapshot.data;
-                                  print(_data);
-                                  var _patdata = _data["data"];
-                                  return ListView(
-                                      // height: ,
-                                      scrollDirection: Axis.vertical,
-                                      children: [
-                                        DataTable(
-                                          columns: [
-                                            DataColumn(label: Text("Product")),
-                                            DataColumn(label: Text("Amount")),
-                                            DataColumn(label: Text("Status")),
-                                            DataColumn(label: Text("On")),
-                                          ],
-                                          rows: _patdata.map((order) {
-                                            return DataRow(cells: [
-                                              DataCell(Text(order["products"])),
-                                              DataCell(Text(
-                                                  "¢${order['total_amount']}")),
-                                              DataCell(
-                                                  Text(order["order_status"])),
-                                              DataCell(
-                                                  Text(order["order_date"])),
-                                            ]);
-                                          }),
-                                        )
-                                      ]);
-                                }
-
-                                if (snapshot.hasError) {
-                                  return Container(
-                                    height: 200,
-                                    padding: EdgeInsets.all(padding_md),
-                                    color: color_background,
-                                    width: MediaQuery.sizeOf(context).width,
-                                    child: Center(
-                                      child: Text(
-                                        "Error!",
-                                        style: font_title.copyWith(
-                                            color: color_gray),
-                                      ),
-                                    ),
-                                  );
-                                }
-
-                                throw Exception();
-                              },
-                            ),
-                          ),
+                  if (snapshot.hasData) {
+                    var _data = snapshot.data;
+                    var _patdata = _data["data"];
+                    return Container(
+                      // height: ,
+                      child: GridView.count(
+                        primary: false,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: padding_md,
+                        crossAxisSpacing: padding_md,
+                        childAspectRatio: 1 / 1.5,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        children: List.generate(
+                          _patdata.length,
+                          (index) {
+                            var _product =
+                                ProductsModel.fromJson(_patdata[index]);
+                            productProvider.addProducts(_product);
+                            return ProductTile(
+                              image: (baseUrl +
+                                  explodeImages(_product.thumbnail_id!)[0]),
+                              title: _product.title,
+                              price: "${_product.sale_price}",
+                              priceStroke: _product.sale_price != null
+                                  ? "${_product.regular_price}"
+                                  : null,
+                            );
+                          },
                         ),
                       ),
+                    );
+                  }
 
-                      Container(
-                        child: Flexible(
-                          flex: 4,
-                          child: SingleChildScrollView(
-                            child: FutureBuilder(
-                              future: _getVWithdrawals,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Container(
-                                    child: GridView.count(
-                                      primary: false,
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: padding_md,
-                                      crossAxisSpacing: padding_md,
-                                      childAspectRatio: 1 / 1.8,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      children: List.generate(
-                                        4,
-                                        (index) => Shimmer.fromColors(
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: double.infinity,
-                                                height: 150,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          radius_md),
-                                                ),
-                                              ),
-                                              spaceHeight_sm(),
-                                              Container(
-                                                width: double.infinity,
-                                                height: 15,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    radius_md,
-                                                  ),
-                                                ),
-                                              ),
-                                              spaceHeight_sm(),
-                                              Container(
-                                                width: double.infinity,
-                                                height: 20,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    radius_md,
-                                                  ),
-                                                ),
-                                              ),
-                                              spaceHeight_sm(),
-                                              Container(
-                                                width: double.infinity,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                  color: color_background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    radius_md,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          baseColor: color_background,
-                                          highlightColor: color_primary,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-
-                                if (snapshot.hasData) {
-                                  var _data = snapshot.data;
-                                  print(_data);
-                                  var _patdata = _data["data"];
-                                  return ListView(
-                                      // height: ,
-                                      scrollDirection: Axis.vertical,
-                                      children: [
-                                        DataTable(
-                                          columns: [
-                                            // DataColumn(label: Text("Product")),
-                                            DataColumn(label: Text("Amount")),
-                                            // DataColumn(label: Text("Status")),
-                                            DataColumn(label: Text("On")),
-                                          ],
-                                          rows: _patdata.map((order) {
-                                            return DataRow(cells: [
-                                              // DataCell(Text(order["products"])),
-                                              DataCell(Text(
-                                                  "¢${order['total_amount']}")),
-                                              // DataCell(Text(order["order_status"])),
-                                              DataCell(
-                                                  Text(order["order_date"])),
-                                            ]);
-                                          }),
-                                        )
-                                      ]);
-                                }
-
-                                if (snapshot.hasError) {
-                                  return Container(
-                                    height: 200,
-                                    padding: EdgeInsets.all(padding_md),
-                                    color: color_background,
-                                    width: MediaQuery.sizeOf(context).width,
-                                    child: Center(
-                                      child: Text(
-                                        "Error!",
-                                        style: font_title.copyWith(
-                                            color: color_gray),
-                                      ),
-                                    ),
-                                  );
-                                }
-
-                                throw Exception();
-                              },
-                            ),
-                          ),
+                  if (snapshot.hasError) {
+                    return Container(
+                      height: 200,
+                      padding: EdgeInsets.all(padding_md),
+                      color: color_background,
+                      width: MediaQuery.sizeOf(context).width,
+                      child: Center(
+                        child: Text(
+                          "Error!",
+                          style: font_title.copyWith(color: color_gray),
                         ),
                       ),
-                    ],
-                  )),
+                    );
+                  }
 
-                  // Expanded(
-                  //   child: Text("Bottom Belt")
-                  // )
-                ],
-              )
-            : Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      spaceHeight_lg(),
-                      Text("Please Login First"),
-                      ElevatedButton(
-                          child: Text("Login Here"),
-                          onPressed: () {
-                            Navigator.pushNamed(context, "/login");
-                          })
-                    ]),
+                  throw Exception();
+                },
               ),
+            ),
+
+            SingleChildScrollView(
+              child: FutureBuilder(
+                future: _getVOrders,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      child: Shimmer.fromColors(
+                        child: Column(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: color_background,
+                                borderRadius: BorderRadius.circular(radius_md),
+                              ),
+                            ),
+                            for (var i = 0; i < 10; i++)
+                              Container(
+                                margin: EdgeInsets.only(top: padding_sm),
+                                width: double.infinity,
+                                height: 25,
+                                decoration: BoxDecoration(
+                                  color: color_background,
+                                  borderRadius: BorderRadius.circular(
+                                    radius_md,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                        baseColor: color_background,
+                        highlightColor: color_primary,
+                      ),
+                    );
+                  }
+
+                  if (snapshot.hasData) {
+                    var _data = snapshot.data;
+                    List _patdata = _data["data"];
+                    return DataTable(
+                      columnSpacing: 0,
+                      showBottomBorder: true,
+                      columns: [
+                        DataColumn(label: Text("Product")),
+                        DataColumn(label: Text("Amount")),
+                        DataColumn(label: Text("Status")),
+                        DataColumn(label: Text("On")),
+                      ],
+                      rows: List<DataRow>.generate(_patdata.length, (index) {
+                        return DataRow(cells: [
+                          DataCell(Text(_patdata[index]["products"])),
+                          DataCell(
+                            Text(
+                              "${currency} ${_patdata[index]['total_amount']}",
+                            ),
+                          ),
+                          DataCell(Text(_patdata[index]["order_status"])),
+                          DataCell(Text(_patdata[index]["order_date"])),
+                        ]);
+                      }),
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return Container(
+                      height: 200,
+                      padding: EdgeInsets.all(padding_md),
+                      color: color_background,
+                      width: MediaQuery.sizeOf(context).width,
+                      child: Center(
+                        child: Text(
+                          "Error!",
+                          style: font_title.copyWith(color: color_gray),
+                        ),
+                      ),
+                    );
+                  }
+
+                  throw Exception();
+                },
+              ),
+            ),
+
+            SingleChildScrollView(
+              child: FutureBuilder(
+                future: _getVWithdrawals,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      child: Shimmer.fromColors(
+                        child: Column(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: color_background,
+                                borderRadius: BorderRadius.circular(radius_md),
+                              ),
+                            ),
+                            for (var i = 0; i < 10; i++)
+                              Container(
+                                margin: EdgeInsets.only(top: padding_sm),
+                                width: double.infinity,
+                                height: 25,
+                                decoration: BoxDecoration(
+                                  color: color_background,
+                                  borderRadius: BorderRadius.circular(
+                                    radius_md,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                        baseColor: color_background,
+                        highlightColor: color_primary,
+                      ),
+                    );
+                  }
+
+                  if (snapshot.hasData) {
+                    var _data = snapshot.data;
+                    var _patdata = _data["data"];
+                    if (_data["data"] == null) return Container();
+                    return DataTable(
+                      columnSpacing: 0,
+                      showBottomBorder: true,
+                      columns: [
+                        DataColumn(label: Text("Amount")),
+                        DataColumn(label: Text("On")),
+                      ],
+                      rows: List<DataRow>.generate(_patdata.length, (index) {
+                        return DataRow(cells: [
+                          DataCell(
+                            Text(
+                              "${currency} ${_patdata[index]['total_amount']}",
+                            ),
+                          ),
+                          DataCell(Text(_patdata[index]["order_date"])),
+                        ]);
+                      }),
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return Container(
+                      height: 200,
+                      padding: EdgeInsets.all(padding_md),
+                      color: color_background,
+                      width: MediaQuery.sizeOf(context).width,
+                      child: Center(
+                        child: Text(
+                          "Error!",
+                          style: font_title.copyWith(color: color_gray),
+                        ),
+                      ),
+                    );
+                  }
+
+                  throw Exception();
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

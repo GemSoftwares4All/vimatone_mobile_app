@@ -53,12 +53,12 @@ class Productcard extends StatelessWidget {
                 //   alignment: Alignment.center,
                 // ),
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Wrap(
+                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   if (priceStroke != null)
                     Text(
-                      priceStroke!,
+                      "${currency}${priceStroke!}",
                       style: font_body.copyWith(
                         color: color_gray,
                         decoration: TextDecoration.lineThrough,
@@ -67,11 +67,11 @@ class Productcard extends StatelessWidget {
                     ),
                   spaceWidth_md(),
                   Text(
-                    price,
+                    "${currency}${price}",
                     style: font_body_title.copyWith(
                         color: color_secondary, height: 1),
                   ),
-                  Spacer()
+                  // Spacer()
                 ],
               ),
               Text(
@@ -79,7 +79,7 @@ class Productcard extends StatelessWidget {
                 style: font_body.copyWith(
                   overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: 2,
+                maxLines: 1,
               ),
               AppButton(
                   onTap: () async {

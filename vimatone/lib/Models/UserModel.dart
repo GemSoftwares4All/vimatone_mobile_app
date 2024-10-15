@@ -8,6 +8,7 @@ class UserModel {
   final int user_id;
   final String fname;
   final String lname;
+  final String username;
   final String phone;
   final String email;
   final String user_bio;
@@ -29,6 +30,7 @@ class UserModel {
     this.user_id,
     this.fname,
     this.lname,
+    this.username,
     this.phone,
     this.email,
     this.user_bio,
@@ -51,6 +53,7 @@ class UserModel {
     int? user_id,
     String? fname,
     String? lname,
+    String? username,
     String? phone,
     String? email,
     String? user_bio,
@@ -72,6 +75,7 @@ class UserModel {
       user_id ?? this.user_id,
       fname ?? this.fname,
       lname ?? this.lname,
+      username ?? this.username,
       phone ?? this.phone,
       email ?? this.email,
       user_bio ?? this.user_bio,
@@ -96,6 +100,7 @@ class UserModel {
       'user_id': user_id,
       'fname': fname,
       'lname': lname,
+      'username': username,
       'phone': phone,
       'email': email,
       'user_bio': user_bio,
@@ -120,6 +125,7 @@ class UserModel {
       int.parse(map['user_id']),
       map['fname'] ?? '',
       map['lname'] ?? '',
+      map['username'] ?? '',
       map['phone'] ?? '',
       map['email'] ?? '',
       map['user_bio'] ?? '',
@@ -146,6 +152,6 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(user_id: $user_id, fname: $fname, lname: $lname, phone: $phone, email: $email, user_bio: $user_bio, storename: $storename, identity_card: $identity_card, profile_picture: $profile_picture, banner_url: $banner_url, city: $city, state: $state, zip: $zip, address1: $address1, address2: $address2, user_type: $user_type, verified: $verified, user_status: $user_status, joined_on: $joined_on)';
+    return 'UserModel(user_id: $user_id, fname: $fname, lname: $lname, username: $username, phone: $phone, email: $email, user_bio: $user_bio, storename: $storename, identity_card: $identity_card, profile_picture: $profile_picture, banner_url: $banner_url, city: $city, state: $state, zip: $zip, address1: $address1, address2: $address2, user_type: $user_type, verified: $verified, user_status: $user_status, joined_on: $joined_on)';
   }
 }

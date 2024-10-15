@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vimatone/Components/BottomAppBar.dart';
 import 'package:vimatone/Config/AppTheme.dart';
+import 'package:vimatone/Models/ProductsModel.dart';
 import 'package:vimatone/Providers/AuthProvider.dart';
 import 'package:vimatone/Providers/CartProvider.dart';
 import 'package:vimatone/Providers/CategoryProvider.dart';
@@ -65,8 +66,9 @@ class _VimatoneState extends State<Vimatone> {
           return ShopScreen(category: args);
         },
         "/view_product": (context) {
-          final args = ModalRoute.of(context)!.settings.arguments as int;
-          return Viewproduct(product_index: args);
+          final args =
+              ModalRoute.of(context)!.settings.arguments as ProductsModel;
+          return Viewproduct(product_model: args);
         }
       },
     );

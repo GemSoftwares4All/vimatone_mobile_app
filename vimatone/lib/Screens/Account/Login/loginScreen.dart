@@ -104,12 +104,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       });
                     }
                   }
-                  print(_response);
                   setState(() {
                     authProvider.setAuth(true);
                     userProvider.setUser(_response["data"]);
                   });
-                  print(userProvider.CurrentUser);
                   // showDialog(context: context, builder: (context) {
 
                   // });

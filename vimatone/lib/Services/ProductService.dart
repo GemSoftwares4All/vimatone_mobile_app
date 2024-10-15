@@ -16,16 +16,19 @@ class ProductService {
       },
     );
 
-    final response = await http.post(
-      Uri.parse(baseApiUrl),
-      headers: apiHeaders,
-      body: jsonEncode(reqBody),
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body)["response"];
-    } else {
-      throw Exception();
-    }
+    try {
+      final response = await http.post(
+        Uri.parse(baseApiUrl),
+        headers: apiHeaders,
+        body: jsonEncode(reqBody),
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)["response"];
+      } else {
+        throw Exception();
+      }
+    } catch (e) {}
   }
 
   Future getByCategory(String category) async {
@@ -34,23 +37,25 @@ class ProductService {
       {
         "endpoint": "fetch_ads",
         "data": {
-          "for": "trending",
+          "for": "promo_ads",
           "limit": 20,
           "by_category": category,
         },
       },
     );
 
-    final response = await http.post(
-      Uri.parse(baseApiUrl),
-      headers: apiHeaders,
-      body: jsonEncode(reqBody),
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body)["response"];
-    } else {
-      throw Exception();
-    }
+    try {
+      final response = await http.post(
+        Uri.parse(baseApiUrl),
+        headers: apiHeaders,
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)["response"];
+      } else {
+        throw Exception();
+      }
+    } catch (e) {}
   }
 
   Future getProducts() async {
@@ -59,22 +64,24 @@ class ProductService {
       {
         "endpoint": "fetch_ads",
         "data": {
-          "for": "trending",
+          "for": "promo_ads",
           "limit": 20,
         },
       },
     );
 
-    final response = await http.post(
-      Uri.parse(baseApiUrl),
-      headers: apiHeaders,
-      body: jsonEncode(reqBody),
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body)["response"];
-    } else {
-      throw Exception();
-    }
+    try {
+      final response = await http.post(
+        Uri.parse(baseApiUrl),
+        headers: apiHeaders,
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)["response"];
+      } else {
+        throw Exception();
+      }
+    } catch (e) {}
   }
 
   // Rafik's code
@@ -91,16 +98,18 @@ class ProductService {
       },
     );
 
-    final response = await http.post(
-      Uri.parse(baseApiUrl),
-      headers: apiHeaders,
-      body: jsonEncode(reqBody),
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body)["response"];
-    } else {
-      throw Exception();
-    }
+    try {
+      final response = await http.post(
+        Uri.parse(baseApiUrl),
+        headers: apiHeaders,
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)["response"];
+      } else {
+        throw Exception();
+      }
+    } catch (e) {}
   }
 
   Future vendorOrders(String postAuthor, String email) async {
@@ -116,16 +125,18 @@ class ProductService {
       },
     );
 
-    final response = await http.post(
-      Uri.parse(baseApiUrl),
-      headers: apiHeaders,
-      body: jsonEncode(reqBody),
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body)["response"];
-    } else {
-      throw Exception();
-    }
+    try {
+      final response = await http.post(
+        Uri.parse(baseApiUrl),
+        headers: apiHeaders,
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)["response"];
+      } else {
+        throw Exception();
+      }
+    } catch (e) {}
   }
 
   Future vendorWithdrawals(String postAuthor, String email) async {
@@ -141,15 +152,17 @@ class ProductService {
       },
     );
 
-    final response = await http.post(
-      Uri.parse(baseApiUrl),
-      headers: apiHeaders,
-      body: jsonEncode(reqBody),
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body)["response"];
-    } else {
-      throw Exception();
-    }
+    try {
+      final response = await http.post(
+        Uri.parse(baseApiUrl),
+        headers: apiHeaders,
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)["response"];
+      } else {
+        throw Exception();
+      }
+    } catch (e) {}
   }
 }

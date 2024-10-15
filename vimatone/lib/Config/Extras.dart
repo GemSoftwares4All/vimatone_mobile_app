@@ -83,7 +83,7 @@ final Color color_success = Color.fromRGBO(195, 255, 135, 1);
 final Color color_transparent = Colors.transparent;
 
 // constants
-final String currency = "GH\$";
+final String currency = "GH¢";
 final String baseUrl = "https://vimatone.com/";
 final String baseApiUrl = "https://vimatone.com/m_api";
 final String API_KEY =
@@ -93,8 +93,7 @@ Map<String, dynamic> apiBody = {
   "m_id": "ua98hack21",
 };
 Map<String, String> apiHeaders = {
-  "x-api-key":
-      "c4316f07b6c87e4aa6bfe8ee7adada86e364fe23d7a9cf8171b9bf8461c2ba85",
+  "x-api-key": API_KEY,
   "Content-Type": "application/json",
   "Accept": "application/json"
 };
@@ -102,14 +101,3 @@ Map<String, String> apiHeaders = {
 List<String> explodeImages(String imgString) {
   return imgString.split("|");
 }
-
-  // void routeTo(BuildContext context, Widget destination,
-  //     {bool FullScreenDialog = false}) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       fullscreenDialog: FullScreenDialog,
-  //       builder: (context) => destination,
-  //     ),
-  //   );
-  // }
